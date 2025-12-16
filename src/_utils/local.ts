@@ -145,7 +145,7 @@ const enUS = {
 };
 
 export const isZhCN =
-  typeof window !== "undefined" && window?.parent?.location?.pathname?.includes("-cn");
+  typeof window !== "undefined" && !window?.parent?.location?.pathname?.includes("-cn");
 
 export default isZhCN
   ? ({ ...zhCN_antd, ...zhCN, ...zhCN_X } as typeof zhCN_antd & typeof zhCN & typeof zhCN_X)
