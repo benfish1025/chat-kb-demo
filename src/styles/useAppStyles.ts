@@ -27,10 +27,9 @@ export const useAppStyles = createStyles(({ token, css }) => {
       gap: 8px;
       margin: 24px 0;
 
-      span {
-        font-weight: bold;
-        color: ${token.colorText};
-        font-size: 16px;
+      img {
+        width: 124px;
+        height: auto;
       }
     `,
     conversations: css`

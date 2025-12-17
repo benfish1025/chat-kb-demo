@@ -4,7 +4,7 @@ import enUS_antd from "antd/locale/en_US";
 import zhCN_antd from "antd/locale/zh_CN";
 
 const zhCN = {
-  whatIsAntDesignX: "什么是 Ant Design X？",
+  whatIsCBU: "汽车出海模式的不同点比较",
   today: "今天",
   howToQuicklyInstallAndImportComponents: "如何快速安装和导入组件？",
   newAgiHybridInterface: "新的 AGI 混合界面",
@@ -50,7 +50,7 @@ const zhCN = {
   isMock: "当前为模拟功能",
   retry: "重新生成",
   placeholder: "点击 Enter 发送消息",
-  agentName: "Ant Design X 助手",
+  agentName: "你好，我是小K！",
   slotTextStart: "请帮我介绍Ant Design X 中",
   slotTextEnd: "的用法。",
   aiMessage_1: `RICH 设计范式 \n [查看详情](/docs/spec/introduce-cn})`,
@@ -74,7 +74,7 @@ const zhCN = {
 };
 
 const enUS = {
-  whatIsAntDesignX: "What is Ant Design X?",
+  whatIsCBU: "汽车出海模式的不同点比较",
   today: "Today",
   howToQuicklyInstallAndImportComponents: "How to quickly install and import components?",
   newAgiHybridInterface: "New AGI Hybrid Interface",

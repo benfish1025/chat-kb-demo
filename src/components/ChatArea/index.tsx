@@ -19,8 +19,6 @@ interface ChatAreaProps {
   isRequesting: boolean;
   onRequest: (val: string) => void;
   onCancel: () => void;
-  deepThink: boolean;
-  onDeepThinkChange: (checked: boolean) => void;
 }
 
 export const ChatArea: React.FC<ChatAreaProps> = ({
@@ -31,8 +29,6 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
   isRequesting,
   onRequest,
   onCancel,
-  deepThink,
-  onDeepThinkChange,
 }) => {
   return (
     <div className={styles.chat}>
@@ -50,8 +46,6 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
             isRequesting={isRequesting}
             onRequest={onRequest}
             onCancel={onCancel}
-            deepThink={deepThink}
-            onDeepThinkChange={onDeepThinkChange}
           />
         </div>
       </div>

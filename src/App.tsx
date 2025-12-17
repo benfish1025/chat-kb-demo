@@ -27,7 +27,6 @@ const App = () => {
     DEFAULT_CONVERSATIONS_ITEMS[0].key
   );
   const [activeConversation, setActiveConversation] = useState<string>();
-  const [deepThink, setDeepThink] = useState<boolean>(true);
 
   // ==================== Runtime ====================
   const { onRequest, messages, isRequesting, abort, onReload } = useXChat({
@@ -94,8 +93,6 @@ const App = () => {
             isRequesting={isRequesting}
             onRequest={handleRequest}
             onCancel={abort}
-            deepThink={deepThink}
-            onDeepThinkChange={setDeepThink}
           />
         </div>
       </ChatContext.Provider>

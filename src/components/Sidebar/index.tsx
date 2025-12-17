@@ -65,13 +65,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div className={styles.side}>
         <div className={styles.logo}>
           <img
-            src="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*eco6RrQhxbMAAAAAAAAAAAAADgCCAQ/original"
+            src="/logo.png"
             draggable={false}
             alt="logo"
             width={24}
             height={24}
           />
-          <span>Ant Design X</span>
         </div>
         <Conversations
           creation={{

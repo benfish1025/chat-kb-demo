@@ -4,22 +4,6 @@ import locale from "../_utils/local";
 export const HISTORY_MESSAGES: {
   [key: string]: DefaultMessageInfo<XModelMessage>[];
 } = {
-  "default-1": [
-    {
-      message: {
-        role: "user",
-        content: locale.howToQuicklyInstallAndImportComponents,
-      },
-      status: "success",
-    },
-    {
-      message: {
-        role: "assistant",
-        content: locale.aiMessage_2,
-      },
-      status: "success",
-    },
-  ],
   "default-2": [
     {
       message: { role: "user", content: locale.newAgiHybridInterface },
