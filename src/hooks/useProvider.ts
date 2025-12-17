@@ -1,28 +1,27 @@
-import {
-  DeepSeekChatProvider,
-  type SSEFields,
-  type XModelParams,
-  type XModelResponse,
-  XRequest,
-} from "@ant-design/x-sdk";
+import { XRequest, type SSEOutput } from "@ant-design/x-sdk";
+import { RagChatProvider, type RagRequestParams } from "./RagChatProvider";
+// import { getOwnerId } from "../_utils/ownerId";
 
-const providerCaches = new Map<string, DeepSeekChatProvider>();
+const providerCaches = new Map<string, RagChatProvider>();
 
 export const providerFactory = (conversationKey: string) => {
   if (!providerCaches.get(conversationKey)) {
     providerCaches.set(
       conversationKey,
-      new DeepSeekChatProvider({
-        request: XRequest<XModelParams, Partial<Record<SSEFields, XModelResponse>>>(
-          "https://api.x.ant.design/api/big_model_glm-4.5-flash",
-          {
-            manual: true,
-            params: {
-              stream: true,
-              model: "glm-4.5-flash",
-            },
-          }
-        ),
+      new RagChatProvider({
+        request: XRequest<RagRequestParams, SSEOutput>("/api/messages", {
+          manual: true,
+          // 默认参数中带上会话 id，方便后端按会话追踪
+          params: {
+            id: conversationKey,
+            stream: true,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "text/event-stream",
+            // "X-Owner-Id": getOwnerId(),
+          },
+        }),
       })
     );
   }
