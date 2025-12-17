@@ -29,7 +29,7 @@ export const DEFAULT_SOURCES: SourceItem[] = [
   },
   {
     title: "关键出口市场的准入门槛：KD 件定义与差异化税率",
-    key: 3,
+    key: 4,
     url: "https://x.ant.design/components/文件名称",
     description:
       "各国海关对于 CKD 和 SKD 的定义存在细微差异。例如，巴西市场规定，若车身已完成涂装则必须归类为 SKD 申报，其税率明显高于未涂装的 CKD 件。企业在规划海外产能时，必须精准识别目标国关于‘实质性加工’的法律界定，以防止因申报模式不当导致的反倾销调查或补税风险。",
