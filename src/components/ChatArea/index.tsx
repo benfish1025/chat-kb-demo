@@ -1,10 +1,9 @@
 import React from "react";
-import classNames from "classnames";
 import type { BubbleListProps } from "@ant-design/x";
 import { MessageList } from "../MessageList";
 import { SenderArea } from "../SenderArea";
 import type { ChatMessage } from "../../types/chat";
-import locale from "../../_utils/local";
+import brandRobot from "../../assets/brand-robot.svg";
 
 interface ChatAreaProps {
   messages: ChatMessage[];
@@ -13,6 +12,14 @@ interface ChatAreaProps {
     chatList: string;
     startPage: string;
     agentName: string;
+
+    senderContainer: string;
+    senderBackground: string;
+    welcomeArea: string;
+    welcomeContent: string;
+    welcomeText: string;
+    welcomeTextLine1: string;
+    welcomeTextLine2: string;
   };
   role: BubbleListProps["role"];
   curConversation: string;
@@ -32,22 +39,28 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
 }) => {
   return (
     <div className={styles.chat}>
+      {messages.length === 0 && <div className={styles.senderBackground} />}
       <div className={styles.chatList}>
         {messages?.length !== 0 && <MessageList messages={messages} role={role} />}
-        <div
-          style={{ width: "100%", maxWidth: 840 }}
-          className={classNames({
-            [styles.startPage]: messages.length === 0,
-          })}
-        >
-          {messages.length === 0 && <div className={styles.agentName}>{locale.agentName}</div>}
-          <SenderArea
-            curConversation={curConversation}
-            isRequesting={isRequesting}
-            onRequest={onRequest}
-            onCancel={onCancel}
-          />
-        </div>
+        {messages.length === 0 && (
+          <div className={styles.welcomeArea}>
+            <div className={styles.welcomeContent}>
+              <img src={brandRobot} alt="Robot" draggable={false} />
+              <div className={styles.welcomeText}>
+                <div className={styles.welcomeTextLine1}>Hi！我是小K</div>
+                <div className={styles.welcomeTextLine2}>遇到什么疑问，尽管提问</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className={styles.senderContainer}>
+        <SenderArea
+          curConversation={curConversation}
+          isRequesting={isRequesting}
+          onRequest={onRequest}
+          onCancel={onCancel}
+        />
       </div>
     </div>
   );

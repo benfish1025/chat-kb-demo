@@ -8,6 +8,7 @@ import "@ant-design/x-markdown/themes/light.css";
 import "@ant-design/x-markdown/themes/dark.css";
 
 import { ChatContext } from "./contexts/ChatContext";
+import { SourcesProvider } from "./contexts/SourcesContext";
 import { DEFAULT_CONVERSATIONS_ITEMS } from "./config/conversations";
 import { historyMessageFactory } from "./config/messages";
 import { providerFactory } from "./hooks/useProvider";
@@ -16,6 +17,7 @@ import { useMarkdownTheme } from "./_utils/x-markdown";
 import { getRole } from "./utils/bubbleRole";
 import { Sidebar } from "./components/Sidebar";
 import { ChatArea } from "./components/ChatArea";
+import { SourcesDrawer } from "./components/SourcesDrawer";
 import locale from "./_utils/local";
 
 const App = () => {
@@ -27,8 +29,8 @@ const App = () => {
     DEFAULT_CONVERSATIONS_ITEMS[0].key
   );
   const [activeConversation, setActiveConversation] = useState<string>();
+  const [deepThink, setDeepThink] = useState<boolean>(true);
 
-  // ==================== Runtime ====================
   const { onRequest, messages, isRequesting, abort, onReload } = useXChat({
     provider: providerFactory(curConversation), // every conversation has its own provider
     conversationKey: curConversation,
@@ -63,39 +65,49 @@ const App = () => {
   return (
     <XProvider locale={locale}>
       {contextHolder}
-      <ChatContext.Provider value={{ onReload }}>
-        <div className={styles.layout}>
-          <Sidebar
-            conversations={conversations}
-            curConversation={curConversation}
-            activeConversation={activeConversation}
-            messages={messages}
-            styles={{
-              side: styles.side,
-              logo: styles.logo,
-              conversations: styles.conversations,
-            }}
-            onConversationChange={setCurConversation}
-            addConversation={addConversation}
-            setConversations={setConversations}
-            setCurConversation={setCurConversation}
-          />
-          <ChatArea
-            messages={messages}
-            styles={{
-              chat: styles.chat,
-              chatList: styles.chatList,
-              startPage: styles.startPage,
-              agentName: styles.agentName,
-            }}
-            role={getRole(className)}
-            curConversation={curConversation}
-            isRequesting={isRequesting}
-            onRequest={handleRequest}
-            onCancel={abort}
-          />
-        </div>
-      </ChatContext.Provider>
+      <SourcesProvider>
+        <ChatContext.Provider value={{ onReload }}>
+          <div className={styles.layout}>
+            <Sidebar
+              conversations={conversations}
+              curConversation={curConversation}
+              activeConversation={activeConversation}
+              messages={messages}
+              styles={{
+                side: styles.side,
+                logo: styles.logo,
+                conversations: styles.conversations,
+              }}
+              onConversationChange={setCurConversation}
+              addConversation={addConversation}
+              setConversations={setConversations}
+              setCurConversation={setCurConversation}
+            />
+            <ChatArea
+              messages={messages}
+              styles={{
+                chat: styles.chat,
+                chatList: styles.chatList,
+                startPage: styles.startPage,
+                agentName: styles.agentName,
+                senderContainer: styles.senderContainer,
+                senderBackground: styles.senderBackground,
+                welcomeArea: styles.welcomeArea,
+                welcomeContent: styles.welcomeContent,
+                welcomeText: styles.welcomeText,
+                welcomeTextLine1: styles.welcomeTextLine1,
+                welcomeTextLine2: styles.welcomeTextLine2,
+              }}
+              role={getRole(className)}
+              curConversation={curConversation}
+              isRequesting={isRequesting}
+              onRequest={handleRequest}
+              onCancel={abort}
+            />
+            <SourcesDrawer />
+          </div>
+        </ChatContext.Provider>
+      </SourcesProvider>
     </XProvider>
   );
 };

@@ -12,7 +12,10 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
   return (
     <Bubble.List
       style={{
-        height: "calc(100% - 160px)",
+        width: "100%",
+        paddingTop: 24,
+        paddingBottom: 24,
+        boxSizing: "border-box",
       }}
       items={messages
         ?.filter((i) => i.id)
@@ -25,9 +28,16 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
         }))}
       styles={{
         root: {
-          marginBlockEnd: 24,
+          width: "100%",
         },
-        bubble: { maxWidth: 840 },
+        bubble: {
+          maxWidth: 960,
+          margin: "0 auto 24px",
+          background: "transparent",
+          boxShadow: "none",
+          border: "none",
+          padding: 0,
+        },
       }}
       role={role}
     />
