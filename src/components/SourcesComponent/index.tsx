@@ -31,8 +31,8 @@ export const SourcesComponent = React.memo((props: SourcesComponentProps) => {
   };
 
   if (!source) {
-    // 如果找不到对应的来源，返回原始的 sup 标签内容
-    return <sup>{children}</sup>;
+    // 如果找不到对应的来源，则不显示该 sup 标签
+    return null;
   }
 
   return (

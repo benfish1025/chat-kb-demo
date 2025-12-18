@@ -3,36 +3,21 @@ import { Drawer } from "antd";
 import XMarkdown from "@ant-design/x-markdown";
 import { useSources } from "../../contexts/SourcesContext";
 import { useAppStyles } from "../../styles/useAppStyles";
-import fileIcon from "../../assets/file-icon.svg";
+import { referenceFileHost } from "../../config/host";
 
 /**
- * 从 URL 中提取文件名（从尾部截取）
+ * Base64 编码工具（兼容非 ASCII 字符）
  */
-const extractFileName = (url: string): string => {
+const base64Encode = (value: string): string => {
   try {
-    // 移除查询参数和锚点
-    const urlWithoutQuery = url.split("?")[0].split("#")[0];
-    // 从尾部提取文件名
-    const parts = urlWithoutQuery.split("/");
-    const fileName = parts[parts.length - 1];
-    // 如果最后一部分为空，取倒数第二部分
-    return fileName || parts[parts.length - 2] || url;
+    return window.btoa(
+      encodeURIComponent(value).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+        String.fromCharCode(parseInt(p1, 16))
+      )
+    );
   } catch {
-    // 如果不是有效的 URL，尝试从字符串中提取文件名
-    const parts = url.split("/");
-    return parts[parts.length - 1] || url;
+    return "";
   }
-};
-
-/**
- * 将数字转换为圆圈数字（①、②、③等）
- */
-const getCircleNumber = (num: number): string => {
-  const circleNumbers = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "⑩"];
-  if (num >= 1 && num <= 10) {
-    return circleNumbers[num - 1];
-  }
-  return num.toString();
 };
 
 export const SourcesDrawer: React.FC = () => {
@@ -81,15 +66,18 @@ export const SourcesDrawer: React.FC = () => {
       placement="right"
       onClose={closeDrawer}
       open={open}
-      width={480}
+      width={560}
       className={styles.sourcesDrawer}
     >
       <div className={styles.sourcesDrawerContent} ref={scrollContainerRef}>
-        {sources.map((source, index) => {
-          const sourceNumber = index + 1;
+        {sources.map((source) => {
+          const sourceNumber = source.key;
           const isActive = activeSourceIndex === source.key;
-          const fileName = extractFileName(source.url);
-          const circleNumber = getCircleNumber(sourceNumber);
+          const file = source.url;
+          const fileUrl =
+            referenceFileHost && file
+              ? `${referenceFileHost}/picturesPreview?urls=${encodeURIComponent(btoa(file))}`
+              : "";
 
           return (
             <div
@@ -99,31 +87,34 @@ export const SourcesDrawer: React.FC = () => {
               }}
               className={`${styles.sourcesDrawerItem} ${isActive ? "source-item-highlight" : ""}`}
             >
-              {/* 序号 */}
-              <div className={styles.sourcesDrawerNumber}>{circleNumber}</div>
-
               {/* 内容区域 */}
               <div className={styles.sourcesDrawerItemContent}>
                 {/* 标题 */}
-                <div className={styles.sourcesDrawerItemTitle}>{source.title}</div>
-
-                {/* 描述（支持 Markdown 渲染） */}
-                {source.description && (
-                  <XMarkdown
-                    paragraphTag="p"
-                    className={styles.sourcesDrawerItemDescription}
-                  >
-                    {source.description}
-                  </XMarkdown>
-                )}
-
-                {/* 分隔线 */}
-                <div className={styles.sourcesDrawerItemDivider} />
-
-                {/* 文件名 */}
-                <div className={styles.sourcesDrawerItemFileName}>
-                  <img src={fileIcon} alt="file" className={styles.sourcesDrawerItemFileIcon} />
-                  {fileName}
+                <div className={styles.sourcesTitleContainer}>
+                  <div className={styles.sourcesDrawerNumber}>{sourceNumber}</div>
+                  {fileUrl ? (
+                    <a
+                      className={styles.sourcesDrawerItemTitle}
+                      href={fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {source.title}
+                    </a>
+                  ) : (
+                    <div className={styles.sourcesDrawerItemTitle}>{source.title}</div>
+                  )}
+                </div>
+                <div className={styles.sourcesDrawerItemDescriptionContainer}>
+                  {/* 描述（支持 Markdown 渲染） */}
+                  {source.description && (
+                    <XMarkdown
+                      paragraphTag="p"
+                      className={styles.sourcesDrawerItemDescription}
+                    >
+                      {source.description}
+                    </XMarkdown>
+                  )}
                 </div>
               </div>
             </div>

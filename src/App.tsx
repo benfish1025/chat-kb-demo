@@ -72,6 +72,8 @@ const App = () => {
   const { styles } = useAppStyles();
   const [, contextHolder] = message.useMessage();
 
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
   // 当前会话 key 是否仍然存在于侧边栏会话列表中
   const isExistingConversation = conversations.some((item) => item.key === curConversation);
 
@@ -188,6 +190,8 @@ const App = () => {
               }}
               onConversationChange={handleConversationChange}
               setConversations={setConversations}
+              collapsed={isSidebarCollapsed}
+              onToggleCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
             />
             <ChatArea
               // 如果当前会话已被删除（不在会话列表中），则不展示其历史消息，回到首页状态
@@ -204,12 +208,15 @@ const App = () => {
                 welcomeText: styles.welcomeText,
                 welcomeTextLine1: styles.welcomeTextLine1,
                 welcomeTextLine2: styles.welcomeTextLine2,
+                sidebarToggle: styles.chatSidebarToggle,
               }}
               role={getRole(className)}
               curConversation={curConversation}
               isRequesting={isRequesting}
               onRequest={handleRequest}
               onCancel={abort}
+              sidebarCollapsed={isSidebarCollapsed}
+              onSidebarOpen={() => setIsSidebarCollapsed(false)}
             />
             <SourcesDrawer />
           </div>

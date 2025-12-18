@@ -1,5 +1,6 @@
 import React from "react";
 import type { CSSProperties } from "react";
+import { message } from "antd";
 
 import type { SourceItem } from "../../config/sources";
 import { useSources } from "../../contexts/SourcesContext";
@@ -29,21 +30,20 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(content);
-        return;
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = content;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
       }
 
-      const textarea = document.createElement("textarea");
-      textarea.value = content;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
+      message.success("复制成功！");
     } catch (error) {
-      // 忽略复制失败，避免影响主流程
-      // 可以在这里添加日志或提示
-      // console.error("Copy failed:", error);
+      message.error("复制失败，请稍后重试");
     }
   };
 
@@ -67,16 +67,15 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
 
   const referenceButtonStyle: CSSProperties = {
     display: "flex",
-    padding: "3px 10px",
+    padding: "4px 8px",
     alignItems: "center",
     gap: 6,
     appearance: "none",
     outline: "none",
-    borderRadius: 8,
-    border: "1px solid rgba(0, 0, 0, 0.20)",
-    boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.08)",
+    borderRadius: 6,
+    background: "rgba(188, 197, 206, 0.1)",
     cursor: "pointer",
-    background: "#FFF",
+    border: 0,
   };
 
   const referenceTextWrapperStyle: CSSProperties = {
@@ -86,47 +85,47 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
   };
 
   const referenceTextStyle: CSSProperties = {
-    color: "#000",
+    color: "rgba(18, 31, 43, 0.6)",
     fontFamily:
       '"PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
     fontSize: 14,
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "24px",
+    lineHeight: "20px",
   };
 
   const referenceNumberStyle: CSSProperties = {
-    color: "#868B8F",
+    color: "rgba(16, 114, 195, 1)",
     fontFamily:
       '"PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
-    fontSize: 15,
+    fontSize: 16,
     fontStyle: "normal",
     fontWeight: 500,
-    lineHeight: "24px",
+    lineHeight: "20px",
   };
 
   const copyButtonStyle: CSSProperties = {
     display: "flex",
-    padding: "3px 10px",
-    borderRadius: 8,
+    padding: "4px 8px",
+    borderRadius: 6,
     alignItems: "center",
     gap: 6,
     cursor: "pointer",
     appearance: "none",
     outline: "none",
     border: "none",
-    background: "#F4F6F7",
+    background: "rgba(188, 197, 206, 0.1)",
     boxShadow: "none",
   };
 
   const copyTextStyle: CSSProperties = {
-    color: "#000",
+    color: "rgba(18, 31, 43, 0.6)",
     fontFamily:
       '"PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
     fontSize: 14,
     fontStyle: "normal",
     fontWeight: 400,
-    lineHeight: "24px",
+    lineHeight: "20px",
   };
 
   const baseIconStyle: CSSProperties = {
@@ -143,7 +142,12 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
     <div style={containerStyle}>
       <div style={footerRowStyle}>
         {sourceCount > 0 && (
-          <button type="button" style={referenceButtonStyle} onClick={handleOpenSources}>
+          <button
+            type="button"
+            className="message-footer-button"
+            style={referenceButtonStyle}
+            onClick={handleOpenSources}
+          >
             <div style={referenceTextWrapperStyle}>
               <span style={referenceTextStyle}>参考来源</span>
               <span style={referenceNumberStyle}>{sourceCount}</span>
@@ -151,7 +155,12 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
           </button>
         )}
 
-        <button type="button" style={copyButtonStyle} onClick={handleCopy}>
+        <button
+          type="button"
+          className="message-footer-button"
+          style={copyButtonStyle}
+          onClick={handleCopy}
+        >
           <img src={copyIcon} alt="copy" style={copyIconStyle} />
           <span style={copyTextStyle}>复制</span>
         </button>

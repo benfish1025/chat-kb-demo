@@ -49,7 +49,7 @@ const zhCN = {
   itIsNowANewConversation: "当前已经是新会话",
   isMock: "当前为模拟功能",
   retry: "重新生成",
-  placeholder: "点击 Enter 发送消息",
+  placeholder: "有问题，尽管问",
   agentName: "你好，我是小K！",
   slotTextStart: "请帮我介绍Ant Design X 中",
   slotTextEnd: "的用法。",

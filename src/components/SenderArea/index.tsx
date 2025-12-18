@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Sender } from "@ant-design/x";
 import { Flex, type GetRef } from "antd";
 import locale from "../../_utils/local";
+import { useAppStyles } from "../../styles/useAppStyles";
 
 interface SenderAreaProps {
   curConversation: string;
@@ -16,6 +17,7 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
   onRequest,
   onCancel,
 }) => {
+  const { styles } = useAppStyles();
   const senderRef = useRef<GetRef<typeof Sender>>(null);
 
   useEffect(() => {
@@ -39,19 +41,20 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
       onSubmit={handleSubmit}
       onCancel={onCancel}
       placeholder={locale.placeholder}
+      rootClassName={styles.senderRoot}
       styles={{
         root: {
           display: "flex",
           width: "100%",
-          maxWidth: 960,
-          minHeight: 200,
-          padding: 15,
+          maxWidth: 896,
+          minHeight: 138,
+          padding: 12,
           flexDirection: "column",
           alignItems: "stretch",
           borderRadius: 20,
-          border: "1px solid rgba(0, 0, 0, 0.20)",
+          border: "border: 1px solid rgba(18, 31, 43, 0.16)",
           background: "#FFF",
-          boxShadow: "0 6px 30px 0 rgba(0, 0, 0, 0.08)",
+          transition: "all 0.2s ease",
         },
       }}
       footer={(actionNode) => {
@@ -61,7 +64,8 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
           </Flex>
         );
       }}
-      autoSize={{ minRows: 3, maxRows: 7 }}
+      autoSize={{ minRows: 2, maxRows: 7 }}
     />
+
   );
 };

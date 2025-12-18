@@ -91,6 +91,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -105,17 +106,21 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -123,6 +128,7 @@ q:after {
   content: "";
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -130,10 +136,12 @@ table {
 
 /* 来源项高亮闪烁动画 */
 @keyframes sourceHighlight {
+
   0%,
   100% {
     background-color: transparent;
   }
+
   50% {
     background-color: #fffbe6;
   }
@@ -141,4 +149,13 @@ table {
 
 .source-item-highlight {
   animation: sourceHighlight 0.5s ease-in-out 3;
+}
+
+/* 消息底部操作按钮：按下时轻微缩放 */
+.message-footer-button {
+  transition: transform 0.08s ease-out;
+}
+
+.message-footer-button:active {
+  transform: scale(0.95);
 }

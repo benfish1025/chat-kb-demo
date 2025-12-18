@@ -21,6 +21,8 @@ interface SidebarProps {
   };
   onConversationChange: (key: string) => void;
   setConversations: (conversations: ConversationItemType[]) => void;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -30,8 +32,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
   styles,
   onConversationChange,
   setConversations,
+  collapsed,
+  onToggleCollapse,
 }) => {
-  const [collapsed, setCollapsed] = useState(false);
   const [newChatHovering, setNewChatHovering] = useState(false);
 
   // 点击「新对话」只切换到一个全新的会话 key，不立刻在侧边栏创建记录
@@ -53,72 +56,71 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }
   };
 
-  const handleToggleCollapse = () => {
-    setCollapsed((prev) => !prev);
-  };
-
   return (
     <>
       <div className={styles.side} data-collapsed={collapsed}>
-        {/* 顶部：LOGO + 折叠按钮 */}
-        <div className="app-sidebar-header">
-          <div className="app-sidebar-logo">
-            <img src={chatkbLogo} draggable={false} alt="ChatKB" />
+        <div className="app-sidebar-inner-container">
+          {/* 顶部：LOGO + 折叠按钮 */}
+          <div className="app-sidebar-header">
+            <div className="app-sidebar-logo">
+              <img src={chatkbLogo} draggable={false} alt="ChatKB" />
+            </div>
+            <div className="app-sidebar-toggle" onClick={onToggleCollapse}>
+              <img src={sidebarController} width={32} height={32} draggable={false} alt="toggle sidebar" />
+            </div>
           </div>
-          <div className="app-sidebar-toggle" onClick={handleToggleCollapse}>
-            <img src={sidebarController} draggable={false} alt="toggle sidebar" />
+
+          {/* 新对话按钮 */}
+          <div
+            className="app-sidebar-new-chat"
+            onClick={handleCreateConversation}
+            onMouseEnter={() => setNewChatHovering(true)}
+            onMouseLeave={() => setNewChatHovering(false)}
+          >
+            <div className="app-sidebar-new-chat-icon">
+              <img
+                src={newChatHovering ? newChatHover : newChatDefault}
+                alt="new chat"
+                draggable={false}
+              />
+            </div>
+            <span className="app-sidebar-new-chat-text">新对话</span>
           </div>
-        </div>
+          <div className="app-sidebar-history-container">
+            {/* 历史标题 */}
+            <div className="app-sidebar-history-header">
+              <span className="app-sidebar-history-title">最近对话</span>
+            </div>
 
-        {/* 新对话按钮 */}
-        <div
-          className="app-sidebar-new-chat"
-          onClick={handleCreateConversation}
-          onMouseEnter={() => setNewChatHovering(true)}
-          onMouseLeave={() => setNewChatHovering(false)}
-        >
-          <div className="app-sidebar-new-chat-icon">
-            <img
-              src={newChatHovering ? newChatHover : newChatDefault}
-              alt="new chat"
-              draggable={false}
-            />
+            {/* 会话记录列表 */}
+            <div className="app-sidebar-history-list">
+              <Conversations
+                items={conversations.map(({ key, label, ...other }) => ({
+                  key,
+                  // 只加前缀，不改变顺序
+                  label: label,
+                  ...other,
+                }))}
+                className="app-sidebar-conversations"
+                activeKey={curConversation}
+                onActiveChange={async (val) => {
+                  onConversationChange(val);
+                }}
+                groupable={false}
+                menu={(conversation) => ({
+                  items: [
+                    {
+                      label: locale.delete,
+                      key: "delete",
+                      icon: <DeleteOutlined />,
+                      danger: true,
+                      onClick: () => handleDeleteConversation(conversation),
+                    },
+                  ],
+                })}
+              />
+            </div>
           </div>
-          <div className="app-sidebar-new-chat-text">新对话</div>
-        </div>
-
-        {/* 历史标题 */}
-        <div className="app-sidebar-history-header">
-          <span className="app-sidebar-history-title">历史</span>
-        </div>
-
-        {/* 会话记录列表 */}
-        <div className="app-sidebar-history-list">
-          <Conversations
-            items={conversations.map(({ key, label, ...other }) => ({
-              key,
-              // 只加前缀，不改变顺序
-              label: key === activeConversation ? `[${locale.curConversation}]${label}` : label,
-              ...other,
-            }))}
-            className="app-sidebar-conversations"
-            activeKey={curConversation}
-            onActiveChange={async (val) => {
-              onConversationChange(val);
-            }}
-            groupable={false}
-            menu={(conversation) => ({
-              items: [
-                {
-                  label: locale.delete,
-                  key: "delete",
-                  icon: <DeleteOutlined />,
-                  danger: true,
-                  onClick: () => handleDeleteConversation(conversation),
-                },
-              ],
-            })}
-          />
         </div>
       </div>
     </>

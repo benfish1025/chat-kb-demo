@@ -11,25 +11,34 @@ export const useAppStyles = createStyles(({ token, css }) => {
     `,
     side: css`
       /* 侧边栏整体容器 */
-      display: flex;
       width: 256px;
-      padding: 0 10px;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-      align-self: stretch;
       border-right: 1px solid rgba(0, 40, 72, 0.1);
       background: rgba(0, 40, 72, 0.02);
-
+      transition: width 0.5s ease;
       /* 折叠态（先只做简易版，后面需要可以再细调） */
+
+      & .app-sidebar-logo {
+        transition: opacity 0.2s ease;
+      }
+
+      & .app-sidebar-inner-container {
+        display: flex;
+        padding: 0 10px;
+        flex-direction: column;
+        lign-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+        align-self: stretch;
+      }
+      
       &[data-collapsed="true"] {
-        width: 64px;
-        padding: 0 8px;
+        width: 0px;
         align-items: center;
 
+        .app-sidebar-new-chat,
+        .app-sidebar-toggle,
         .app-sidebar-logo {
-          display: none;
+          opacity: 0;
         }
 
         .app-sidebar-new-chat,
@@ -42,7 +51,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
       /* 1. 顶部：Logo + 折叠按钮 */
       .app-sidebar-header {
         display: flex;
-        padding: 22px 6px 22px 16px;
+        padding: 16px 0 16px 12px;
         justify-content: space-between;
         align-items: center;
         align-self: stretch;
@@ -59,8 +68,8 @@ export const useAppStyles = createStyles(({ token, css }) => {
       }
 
       .app-sidebar-toggle {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -80,22 +89,24 @@ export const useAppStyles = createStyles(({ token, css }) => {
       }
 
       .app-sidebar-toggle img {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
       }
 
       /* 2. 新对话按钮 */
       .app-sidebar-new-chat {
         display: flex;
         width: 100%;
-        padding: 10px 12px;
+        height: 36px;
+        padding: 0 12px;
         justify-content: center;
         align-items: center;
         gap: 10px;
         border-radius: 8px;
         border: 1px solid #eee;
-        background: #ffffff;
         box-sizing: border-box;
+        border-radius: 8px;
+        border: 1px solid rgba(18, 31, 43, 0.10);
         cursor: pointer;
         transition:
           background 0.1s ease,
@@ -116,8 +127,8 @@ export const useAppStyles = createStyles(({ token, css }) => {
       }
 
       .app-sidebar-new-chat-icon {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -125,24 +136,13 @@ export const useAppStyles = createStyles(({ token, css }) => {
       }
 
       .app-sidebar-new-chat-icon img {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
       }
 
       .app-sidebar-new-chat-text {
         color: #1a2025;
-        font-family:
-          "PingFang SC",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Helvetica Neue",
-          Arial,
-          "Noto Sans",
-          "Liberation Sans",
-          sans-serif;
-        font-size: 16px;
+        font-size: 14px;
         font-style: normal;
         font-weight: 500;
         line-height: 24px; /* 150% */
@@ -156,35 +156,34 @@ export const useAppStyles = createStyles(({ token, css }) => {
       /* 3-1. 历史标题区域 */
       .app-sidebar-history-header {
         display: flex;
-        padding: 0 16px 0 16px;
+        padding: 0 8px 0 8px;
         align-items: center;
         align-self: stretch;
         box-sizing: border-box;
       }
 
       .app-sidebar-history-title {
-        color: rgba(26, 32, 37, 0.4);
-        font-family:
-          "PingFang SC",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Helvetica Neue",
-          Arial,
-          "Noto Sans",
-          "Liberation Sans",
-          sans-serif;
+        color: rgba(18, 31, 43, 0.3);
         font-size: 12px;
         font-style: normal;
-        font-weight: 600;
+        font-weight: 400;
         line-height: 24px; /* 200% */
       }
 
       /* 3-2. 会话记录列表容器 */
+      .app-sidebar-history-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-self: stretch;
+        box-sizing: border-box;
+        gap: 4px;
+      }
+
+
       .app-sidebar-history-list {
         display: flex;
-        padding: 0 8px;
+        padding: 0;
         flex-direction: column;
         align-items: center;
         align-self: stretch;
@@ -194,6 +193,8 @@ export const useAppStyles = createStyles(({ token, css }) => {
       /* Conversations 列表本身 */
       .app-sidebar-conversations {
         width: 100%;
+        padding: 0;
+        gap: 0;
       }
 
       .app-sidebar-conversations .ant-conversations-list {
@@ -277,11 +278,49 @@ export const useAppStyles = createStyles(({ token, css }) => {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      padding: 0;
       .ant-bubble-content-updating {
         background-image: linear-gradient(90deg, #ff6b23 0%, #af3cb8 31%, #53b6ff 89%);
         background-size: 100% 2px;
         background-repeat: no-repeat;
         background-position: bottom;
+      }
+      & .styled-decorative-curve {
+        position: absolute;
+        right: -32px;
+        bottom: -12px;
+        width: 180px;
+        height: auto;
+        pointer-events: none;
+        user-select: none;
+      }
+    `,
+    chatSidebarToggle: css`
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      z-index: 2;
+      transition:
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+
+      &:hover {
+        background: rgba(26, 32, 37, 0.03);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      img {
+        width: 32px;
+        height: 32px;
       }
     `,
     startPage: css`
@@ -318,9 +357,49 @@ export const useAppStyles = createStyles(({ token, css }) => {
       flex-shrink: 0;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      padding: 16px 0 40px;
+      padding: 10px 0 0;
       box-sizing: border-box;
+      && .sender-footer {
+        display: flex;
+        padding: 8px 0;
+        align-items: center;
+        color: rgba(18, 31, 43, 0.50);
+        text-align: center;
+        font-family: "PingFang SC";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 12px; /* 120% */
+      }
+    `,
+    senderRoot: css`
+      &&:hover,
+      &&:focus-within {
+        box-shadow: 0 6px 30px 0 rgba(18, 31, 43, 0.08);
+        border-color: rgba(18, 31, 43, 0.22);
+      }
+
+      && .ant-sender-content textarea::placeholder {
+        color: rgba(22, 40, 57, 0.3);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 28px;
+      }
+
+      && .ant-sender-content {
+        height: auto;
+      }
+      && .ant-sender-content textarea {
+        color: rgba(18, 31, 43, 0.90);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 28px;
+      }
+
+      && .ant-sender-footer {
+        padding: 0 !important;
+      }
+
     `,
     senderBackground: css`
       position: absolute;
@@ -344,12 +423,14 @@ export const useAppStyles = createStyles(({ token, css }) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 32px;
+      gap: 0;
     `,
     welcomeText: css`
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 0;
+      margin-left: -48px;
     `,
     welcomeTextLine1: css`
       color: #1a2025;
@@ -386,6 +467,15 @@ export const useAppStyles = createStyles(({ token, css }) => {
       font-style: normal;
       font-weight: 600;
       line-height: normal;
+    `,
+    welcomeDecorativeCurve: css`
+      position: absolute;
+      right: -32px;
+      bottom: -12px;
+      width: 180px;
+      height: auto;
+      pointer-events: none;
+      user-select: none;
     `,
     sourceSup: css`
       display: inline-block;
@@ -436,7 +526,8 @@ export const useAppStyles = createStyles(({ token, css }) => {
     `,
     sourcesDrawerItem: css`
       display: flex;
-      padding: 20px 24px;
+      padding: 32px 24px;
+      gap: 16px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       transition: background-color 0.3s ease;
 
@@ -452,32 +543,27 @@ export const useAppStyles = createStyles(({ token, css }) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
-      background: #0082ed;
-      color: #ffffff;
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
-      font-size: 16px;
+      color: #0082ed;
+      border: 2px solid #0082ed;
+      font-size: 14px;
       font-weight: 600;
       flex-shrink: 0;
-      margin-right: 16px;
+      line-height: 26px;
     `,
     sourcesDrawerItemContent: css`
       display: flex;
       flex-direction: column;
       flex: 1;
-      gap: 12px;
+      gap: 20px;
+    `,
+    sourcesTitleContainer: css`
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
     `,
     sourcesDrawerItemTitle: css`
       font-family:
@@ -495,6 +581,17 @@ export const useAppStyles = createStyles(({ token, css }) => {
       font-weight: 600;
       color: #1a2025;
       line-height: 20px;
+      text-decoration: underline;
+
+      &:hover {
+        color: #0082ed;
+      }
+    `,
+    sourcesDrawerItemDescriptionContainer: css`
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 0 12px;
     `,
     sourcesDrawerItemDescription: css`
       font-family:

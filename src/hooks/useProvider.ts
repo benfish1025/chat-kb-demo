@@ -2,6 +2,7 @@ import { XRequest, type SSEOutput } from "@ant-design/x-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { RagChatProvider, type RagRequestParams } from "./RagChatProvider";
 import { getOwnerId } from "../_utils/ownerId";
+import { apiHost } from "../config/host";
 
 const providerCaches = new Map<string, RagChatProvider>();
 
@@ -22,22 +23,19 @@ export const providerFactory = (conversationKey: string) => {
     providerCaches.set(
       conversationKey,
       new RagChatProvider({
-        request: XRequest<RagRequestParams, SSEOutput>(
-          "https://inharmoniously-superartificial-remedios.ngrok-free.dev/api/messages",
-          {
-            manual: true,
-            // 默认参数中带上会话 id，方便后端按会话追踪（后端要求是 UUID）
-            params: {
-              id: getConversationId(conversationKey),
-              stream: true,
-            },
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "text/event-stream",
-              "X-Owner-Id": getOwnerId(),
-            },
-          }
-        ),
+        request: XRequest<RagRequestParams, SSEOutput>(`${apiHost}/api/messages`, {
+          manual: true,
+          // 默认参数中带上会话 id，方便后端按会话追踪（后端要求是 UUID）
+          params: {
+            id: getConversationId(conversationKey),
+            stream: true,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "text/event-stream",
+            "X-Owner-Id": getOwnerId(),
+          },
+        }),
       })
     );
   }

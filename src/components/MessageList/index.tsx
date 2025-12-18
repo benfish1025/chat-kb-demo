@@ -16,7 +16,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
       style={{
         width: "100%",
         paddingTop: 24,
-        paddingBottom: 24,
+        paddingBottom: 30,
         boxSizing: "border-box",
       }}
       items={orderedMessages.map((i) => ({
@@ -31,7 +31,7 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
           width: "100%",
         },
         bubble: {
-          maxWidth: 960,
+          maxWidth: 896,
           margin: "0 auto 24px",
           background: "transparent",
           boxShadow: "none",
