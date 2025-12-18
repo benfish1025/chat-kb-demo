@@ -12,7 +12,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
     side: css`
       /* 侧边栏整体容器 */
       display: flex;
-      width: 306px;
+      width: 256px;
       padding: 0 10px;
       flex-direction: column;
       align-items: center;

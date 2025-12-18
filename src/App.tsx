@@ -22,14 +22,13 @@ import locale from "./_utils/local";
 
 const App = () => {
   const [className] = useMarkdownTheme();
-  const { conversations, addConversation, setConversations } = useXConversations({
+  const { conversations, setConversations } = useXConversations({
     defaultConversations: DEFAULT_CONVERSATIONS_ITEMS,
   });
   const [curConversation, setCurConversation] = useState<string>(
     DEFAULT_CONVERSATIONS_ITEMS[0].key
   );
   const [activeConversation, setActiveConversation] = useState<string>();
-  const [deepThink, setDeepThink] = useState<boolean>(true);
 
   const { onRequest, messages, isRequesting, abort, onReload } = useXChat({
     provider: providerFactory(curConversation), // every conversation has its own provider
@@ -52,7 +51,21 @@ const App = () => {
   const { styles } = useAppStyles();
   const [, contextHolder] = message.useMessage();
 
+  const handleConversationChange = (key: string) => {
+    setCurConversation(key);
+    setActiveConversation(key);
+  };
+
   const handleRequest = (val: string) => {
+    // 如果当前会话 key 不在侧边栏列表中，说明是通过「新对话」进入的首页，
+    // 此时用户第一次发送消息，需要在侧边栏最上方新增一条记录。
+    const exists = conversations.some((item) => item.key === curConversation);
+
+    if (!exists) {
+      const title = val.slice(0, 15) || locale.newConversation;
+      setConversations([{ key: curConversation, label: title }, ...conversations]);
+    }
+
     onRequest({
       messages: [{ role: "user", content: val }],
       thinking: {
@@ -78,10 +91,8 @@ const App = () => {
                 logo: styles.logo,
                 conversations: styles.conversations,
               }}
-              onConversationChange={setCurConversation}
-              addConversation={addConversation}
+              onConversationChange={handleConversationChange}
               setConversations={setConversations}
-              setCurConversation={setCurConversation}
             />
             <ChatArea
               messages={messages}

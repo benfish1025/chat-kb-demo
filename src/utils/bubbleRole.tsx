@@ -12,7 +12,7 @@ export const getRole = (className: string): BubbleListProps["role"] => ({
     contentRender: (content: string, { status }) => {
       return (
         <XMarkdown
-          paragraphTag="div"
+          paragraphTag="p"
           className={className}
           streaming={{
             hasNextChunk: status === "updating",

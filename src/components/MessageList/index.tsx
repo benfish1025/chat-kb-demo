@@ -9,6 +9,8 @@ interface MessageListProps {
 }
 
 export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
+  const orderedMessages = [...(messages ?? [])].filter((i) => i.id).reverse();
+
   return (
     <Bubble.List
       style={{
@@ -17,15 +19,13 @@ export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
         paddingBottom: 24,
         boxSizing: "border-box",
       }}
-      items={messages
-        ?.filter((i) => i.id)
-        .map((i) => ({
-          ...i.message,
-          key: i.id!,
-          status: i.status,
-          loading: i.status === "loading",
-          extraInfo: i.message.extraInfo,
-        }))}
+      items={orderedMessages.map((i) => ({
+        ...i.message,
+        key: i.id!,
+        status: i.status,
+        loading: i.status === "loading",
+        extraInfo: i.message.extraInfo,
+      }))}
       styles={{
         root: {
           width: "100%",

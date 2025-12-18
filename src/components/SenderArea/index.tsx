@@ -44,7 +44,7 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
           display: "flex",
           width: "100%",
           maxWidth: 960,
-          minHeight: 138,
+          minHeight: 200,
           padding: 15,
           flexDirection: "column",
           alignItems: "stretch",
@@ -61,7 +61,7 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
           </Flex>
         );
       }}
-      autoSize={{ minRows: 3, maxRows: 6 }}
+      autoSize={{ minRows: 3, maxRows: 7 }}
     />
   );
 };
