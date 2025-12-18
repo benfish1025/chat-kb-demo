@@ -1,35 +1,43 @@
 import React from "react";
 import type { ComponentProps } from "@ant-design/x-markdown";
-import { DEFAULT_SOURCES } from "../../config/sources";
+import type { SourceItem } from "../../config/sources";
 import { useSources } from "../../contexts/SourcesContext";
 import { useAppStyles } from "../../styles/useAppStyles";
+
+interface SourcesComponentProps extends ComponentProps {
+  sources?: SourceItem[];
+  messageId?: string;
+}
 
 /**
  * 来源引用组件
  * 将 Markdown 中的 <sup> 标签渲染为来源引用
  */
-export const SourcesComponent = React.memo((props: ComponentProps) => {
-  const sourceIndex = parseInt(`${props?.children}` || "0", 10);
-  const source = DEFAULT_SOURCES.find((item) => item.key === sourceIndex);
-  const { openDrawer } = useSources();
+export const SourcesComponent = React.memo((props: SourcesComponentProps) => {
+  const { sources, children } = props;
+  const sourceIndex = parseInt(`${children}` || "0", 10);
+  const source = (sources || []).find((item) => item.key === sourceIndex);
+  const { openDrawer, setSources } = useSources();
   const { styles } = useAppStyles();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (source) {
+    if (source && sources && sources.length) {
+      // 点击时同步更新 Drawer 的来源列表，并定位到对应来源
+      setSources(sources);
       openDrawer(source.key);
     }
   };
 
   if (!source) {
     // 如果找不到对应的来源，返回原始的 sup 标签内容
-    return <sup>{props?.children}</sup>;
+    return <sup>{children}</sup>;
   }
 
   return (
     <sup className={styles.sourceSup} onClick={handleClick}>
-      {props?.children}
+      {children}
     </sup>
   );
 });
