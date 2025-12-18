@@ -1,31 +1,10 @@
 export interface SourceItem {
-  /**
-   * 引用序号，对应 Markdown 中的 <sup>数字</sup>
-   */
-  key: number;
-  /**
-   * 来源标题
-   */
   title: string;
-  /**
-   * 文件地址，对应后端返回的 file 字段
-   */
+  key: number;
   url: string;
-  /**
-   * 片段文本或摘要
-   */
   description?: string;
-  /**
-   * 后端返回的 chunk_id（可选，用于后续扩展）
-   */
-  chunkId?: string;
-  /**
-   * 后端返回的 file_id（可选，用于后续扩展）
-   */
-  fileId?: string;
 }
 
-// 测试用的静态数据（仅作为占位示例，不再作为真实数据源）
 export const DEFAULT_SOURCES: SourceItem[] = [
   {
     title: "东南亚及拉美市场：CKD 模式下的关税成本优化分析",

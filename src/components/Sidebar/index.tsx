@@ -8,7 +8,6 @@ import chatkbLogo from "../../assets/chatkb-logo.svg";
 import sidebarController from "../../assets/sidebar-controler.svg";
 import newChatDefault from "../../assets/new-chat-1.svg";
 import newChatHover from "../../assets/new-chat.svg";
-import { removeConversationMessages } from "../../_utils/chatStorage";
 
 interface SidebarProps {
   conversations: ConversationItemType[];
@@ -43,10 +42,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const handleDeleteConversation = (conversation: ConversationItemType) => {
     const newList = conversations.filter((item) => item.key !== conversation.key);
     const newKey = newList?.[0]?.key;
-
-    // 删除本地存储中的对应会话消息
-    removeConversationMessages(conversation.key);
-
     setConversations(newList);
     if (conversation.key === curConversation) {
       onConversationChange(newKey ?? "");

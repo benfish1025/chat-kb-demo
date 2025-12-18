@@ -5,7 +5,6 @@ import {
   type XRequestOptions,
   type SSEOutput,
 } from "@ant-design/x-sdk";
-import type { SourceItem } from "../config/sources";
 
 /**
  * 后端 /api/messages SSE 接口的请求入参
@@ -27,11 +26,6 @@ export interface RagRequestParams {
   content?: string;
   messages?: RagRequestMessage[];
   stream?: boolean;
-  /**
-   * X SDK 内部使用的“深度思考 / 思维链”配置
-   * - 仅用于前端控制，不需要传给后端
-   */
-  thinking?: unknown;
 }
 
 /**
@@ -52,14 +46,9 @@ export class RagChatProvider<
 
     const baseParams = (options?.params || {}) as Input;
 
-    // 从请求参数中剔除仅前端使用的字段（例如 thinking）
-    const { thinking: _thinking, ...restParams } = (requestParams || {}) as Input & {
-      thinking?: unknown;
-    };
-
     const merged = {
       ...(baseParams || {}),
-      ...(restParams || {}),
+      ...(requestParams || {}),
     } as Input;
 
     // 确保有会话 id（前端会用 conversationKey 作为 id 传入 params）
@@ -106,20 +95,13 @@ export class RagChatProvider<
   transformMessage(info: TransformMessage<ChatMessage, Output>): ChatMessage {
     const { originMessage, chunk, responseHeaders } = info || {};
 
-    const origin = (originMessage as XModelMessage | undefined) || ({} as XModelMessage);
+    // 取当前已展示的内容
     const originContent =
-      typeof origin.content === "string"
-        ? (origin.content as string)
-        : (origin as any)?.content?.text || "";
-    const originExtraInfo = ((origin as any).extraInfo || {}) as {
-      sources?: SourceItem[];
-      title?: string;
-      [key: string]: any;
-    };
+      typeof (originMessage as XModelMessage | undefined)?.content === "string"
+        ? ((originMessage as XModelMessage).content as string)
+        : ((originMessage as XModelMessage | undefined)?.content as any)?.text || "";
 
     let content = originContent || "";
-    let sources = originExtraInfo.sources || [];
-    let title = originExtraInfo.title;
 
     try {
       const isSSE = responseHeaders.get("content-type")?.includes("text/event-stream");
@@ -138,33 +120,8 @@ export class RagChatProvider<
               break;
             }
             case "sources": {
-              // 适配后端返回的 sources，规范化为前端 SourceItem 结构
-              if (Array.isArray(data.sources)) {
-                const normalized: SourceItem[] = data.sources
-                  .map((item: any) => {
-                    const key = Number(item?.key);
-                    if (!Number.isFinite(key)) return null;
-                    return {
-                      key,
-                      title: item?.title || item?.file || `来源 ${key}`,
-                      url: item?.file || "",
-                      description: item?.description,
-                      chunkId: item?.chunk_id,
-                      fileId: item?.file_id,
-                    } as SourceItem;
-                  })
-                  .filter(Boolean) as SourceItem[];
-
-                if (normalized.length) {
-                  sources = normalized;
-                }
-              }
-              break;
-            }
-            case "title": {
-              if (typeof data.title === "string" && data.title.trim()) {
-                title = data.title.trim();
-              }
+              // 当前 UI 的 sources 采用静态配置，暂不处理服务端返回的 sources
+              // 如需接入，可在此将 sources 存到 extraInfo 中
               break;
             }
             case "error": {
@@ -172,8 +129,9 @@ export class RagChatProvider<
               break;
             }
             case "done":
+            case "title":
             default:
-              // 对于 done 等事件，不修改已有内容
+              // 对于 done/title 等事件，不修改已有内容
               break;
           }
         }
@@ -190,22 +148,9 @@ export class RagChatProvider<
       console.error("RagChatProvider transformMessage error:", error, chunk);
     }
 
-    const nextExtraInfo: Record<string, any> = {
-      ...originExtraInfo,
-    };
-
-    if (sources && sources.length) {
-      nextExtraInfo.sources = sources;
-    }
-    if (title) {
-      nextExtraInfo.title = title;
-    }
-
     return {
       role: "assistant",
       content,
-      // 挂载在 extraInfo 上，供 UI 展示引用来源与自动标题，并一并持久化
-      extraInfo: nextExtraInfo,
     } as unknown as ChatMessage;
   }
 }

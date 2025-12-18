@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Drawer } from "antd";
-import XMarkdown from "@ant-design/x-markdown";
 import { useSources } from "../../contexts/SourcesContext";
+import { DEFAULT_SOURCES } from "../../config/sources";
 import { useAppStyles } from "../../styles/useAppStyles";
 import fileIcon from "../../assets/file-icon.svg";
 
@@ -36,44 +36,31 @@ const getCircleNumber = (num: number): string => {
 };
 
 export const SourcesDrawer: React.FC = () => {
-  const { open, activeSourceIndex, closeDrawer, sources } = useSources();
+  const { open, activeSourceIndex, closeDrawer } = useSources();
   const { styles } = useAppStyles();
   const itemRefs = useRef<{ [key: number]: HTMLDivElement | null }>({});
-  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!open) return;
-
-    // 延迟执行，确保 Drawer 内容和 itemRefs 已全部渲染完成
-    const timer = setTimeout(() => {
-      const container = scrollContainerRef.current;
-
-      // 如果有指定的 activeSourceIndex，优先滚动到该来源
-      if (activeSourceIndex !== null) {
+    if (open && activeSourceIndex !== null) {
+      // 延迟滚动和闪烁，确保 Drawer 内容已渲染
+      const timer = setTimeout(() => {
         const targetElement = itemRefs.current[activeSourceIndex];
         if (targetElement) {
+          // 先滚动到目标元素
           targetElement.scrollIntoView({ behavior: "smooth", block: "center" });
-
-          // 触发闪烁动画，高亮当前来源
+          // 然后触发闪烁动画
           setTimeout(() => {
             targetElement.classList.add("source-item-highlight");
+            // 动画持续 1.5 秒（0.5s * 3次）
             setTimeout(() => {
               targetElement.classList.remove("source-item-highlight");
             }, 1500);
           }, 300);
-
-          return;
         }
-      }
-
-      // 找不到指定来源或没有 activeSourceIndex 时，回到顶部，避免停留在上一次的位置
-      if (container) {
-        container.scrollTop = 0;
-      }
-    }, 200);
-
-    return () => clearTimeout(timer);
-  }, [open, activeSourceIndex, sources]);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [open, activeSourceIndex]);
 
   return (
     <Drawer
@@ -84,8 +71,8 @@ export const SourcesDrawer: React.FC = () => {
       width={480}
       className={styles.sourcesDrawer}
     >
-      <div className={styles.sourcesDrawerContent} ref={scrollContainerRef}>
-        {sources.map((source, index) => {
+      <div className={styles.sourcesDrawerContent}>
+        {DEFAULT_SOURCES.map((source, index) => {
           const sourceNumber = index + 1;
           const isActive = activeSourceIndex === source.key;
           const fileName = extractFileName(source.url);
@@ -107,14 +94,9 @@ export const SourcesDrawer: React.FC = () => {
                 {/* 标题 */}
                 <div className={styles.sourcesDrawerItemTitle}>{source.title}</div>
 
-                {/* 描述（支持 Markdown 渲染） */}
+                {/* 描述 */}
                 {source.description && (
-                  <XMarkdown
-                    paragraphTag="p"
-                    className={styles.sourcesDrawerItemDescription}
-                  >
-                    {source.description}
-                  </XMarkdown>
+                  <div className={styles.sourcesDrawerItemDescription}>{source.description}</div>
                 )}
 
                 {/* 分隔线 */}
