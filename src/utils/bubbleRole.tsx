@@ -10,10 +10,9 @@ export const getRole = (className: string): BubbleListProps["role"] => ({
       <Footer content={content} status={status} id={key as string} />
     ),
     contentRender: (content: string, { status }) => {
-      const newContent = content.replace(/\n\n/g, "<br/><br/>");
       return (
         <XMarkdown
-          paragraphTag="div"
+          paragraphTag="p"
           className={className}
           streaming={{
             hasNextChunk: status === "updating",
@@ -23,7 +22,7 @@ export const getRole = (className: string): BubbleListProps["role"] => ({
             sup: SourcesComponent,
           }}
         >
-          {newContent}
+          {content}
         </XMarkdown>
       );
     },

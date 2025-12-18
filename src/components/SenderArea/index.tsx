@@ -39,6 +39,21 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
       onSubmit={handleSubmit}
       onCancel={onCancel}
       placeholder={locale.placeholder}
+      styles={{
+        root: {
+          display: "flex",
+          width: "100%",
+          maxWidth: 960,
+          minHeight: 200,
+          padding: 15,
+          flexDirection: "column",
+          alignItems: "stretch",
+          borderRadius: 20,
+          border: "1px solid rgba(0, 0, 0, 0.20)",
+          background: "#FFF",
+          boxShadow: "0 6px 30px 0 rgba(0, 0, 0, 0.08)",
+        },
+      }}
       footer={(actionNode) => {
         return (
           <Flex justify="flex-end" align="center">
@@ -46,7 +61,7 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
           </Flex>
         );
       }}
-      autoSize={{ minRows: 3, maxRows: 6 }}
+      autoSize={{ minRows: 3, maxRows: 7 }}
     />
   );
 };

@@ -74,7 +74,7 @@ const zhCN = {
 };
 
 const enUS = {
-  whatIsCBU: "汽车出海模式的不同点比较",
+  whatIsAntDesignX: "What is Ant Design X?",
   today: "Today",
   howToQuicklyInstallAndImportComponents: "How to quickly install and import components?",
   newAgiHybridInterface: "New AGI Hybrid Interface",

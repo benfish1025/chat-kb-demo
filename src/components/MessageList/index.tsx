@@ -9,25 +9,35 @@ interface MessageListProps {
 }
 
 export const MessageList: React.FC<MessageListProps> = ({ messages, role }) => {
+  const orderedMessages = [...(messages ?? [])].filter((i) => i.id).reverse();
+
   return (
     <Bubble.List
       style={{
-        height: "calc(100% - 160px)",
+        width: "100%",
+        paddingTop: 24,
+        paddingBottom: 24,
+        boxSizing: "border-box",
       }}
-      items={messages
-        ?.filter((i) => i.id)
-        .map((i) => ({
-          ...i.message,
-          key: i.id!,
-          status: i.status,
-          loading: i.status === "loading",
-          extraInfo: i.message.extraInfo,
-        }))}
+      items={orderedMessages.map((i) => ({
+        ...i.message,
+        key: i.id!,
+        status: i.status,
+        loading: i.status === "loading",
+        extraInfo: i.message.extraInfo,
+      }))}
       styles={{
         root: {
-          marginBlockEnd: 24,
+          width: "100%",
         },
-        bubble: { maxWidth: 840 },
+        bubble: {
+          maxWidth: 960,
+          margin: "0 auto 24px",
+          background: "transparent",
+          boxShadow: "none",
+          border: "none",
+          padding: 0,
+        },
       }}
       role={role}
     />
