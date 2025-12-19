@@ -86,13 +86,14 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
               <div className={styles.welcomeText}>
                 <div className={styles.welcomeTextLine1}>Hi！我是小K</div>
                 <div className={styles.welcomeTextLine2}>遇到什么疑问，尽管问我</div>
-                <img
-                  src={decorativeCurve}
-                  alt=""
-                  aria-hidden="true"
-                  className={styles.welcomeDecorativeCurve}
-                  draggable={false}
-                />
+                <div className="app-styled-decorative-curve">
+                  <img
+                    src={decorativeCurve}
+                    alt=""
+                    aria-hidden="true"
+                    draggable={false}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -36,9 +36,17 @@ const App = () => {
     defaultConversations,
   });
 
-  // 首次进入时不自动切到最近一次对话，而是使用一个全新的会话 key
+  // 首次进入时，如果有历史对话，使用最近一次对话的 key
+  // 如果没有历史对话，则生成一个新的会话 key
   // 只有在用户发送第一条消息或点击侧边栏会话时，才会真正进入对应会话
-  const [curConversation, setCurConversation] = useState<string>(() => Date.now().toString());
+  const [curConversation, setCurConversation] = useState<string>(() => {
+    // 优先使用存储的最近一次对话的 key
+    if (storedConversations && storedConversations.length > 0) {
+      return storedConversations[0].key;
+    }
+    // 如果没有历史对话，生成新的 key（使用时间戳确保唯一性）
+    return Date.now().toString();
+  });
   const [activeConversation, setActiveConversation] = useState<string>();
 
   const defaultMessages = useMemo(() => {
@@ -209,6 +217,7 @@ const App = () => {
                 welcomeTextLine1: styles.welcomeTextLine1,
                 welcomeTextLine2: styles.welcomeTextLine2,
                 sidebarToggle: styles.chatSidebarToggle,
+                welcomeDecorativeCurve: styles.welcomeDecorativeCurve,
               }}
               role={getRole(className)}
               curConversation={curConversation}

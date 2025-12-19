@@ -28,7 +28,6 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
   conversations,
   curConversation,
-  activeConversation,
   styles,
   onConversationChange,
   setConversations,
@@ -37,7 +36,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [newChatHovering, setNewChatHovering] = useState(false);
 
-  // 点击「新对话」只切换到一个全新的会话 key，不立刻在侧边栏创建记录
   const handleCreateConversation = () => {
     const now = dayjs().valueOf().toString();
     onConversationChange(now);

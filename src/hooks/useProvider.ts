@@ -1,21 +1,30 @@
 import { XRequest, type SSEOutput } from "@ant-design/x-sdk";
-import { v4 as uuidv4 } from "uuid";
 import { RagChatProvider, type RagRequestParams } from "./RagChatProvider";
 import { getOwnerId } from "../_utils/ownerId";
 import { apiHost } from "../config/host";
+import {
+  getOrSetConversationId,
+  loadConversationIdMap,
+} from "../_utils/chatStorage";
 
 const providerCaches = new Map<string, RagChatProvider>();
 
 // 将前端的 conversationKey 映射为后端需要的 UUID 会话 id
-const conversationIdMap = new Map<string, string>();
+// 从 localStorage 恢复映射关系
+const conversationIdMap = new Map<string, string>(
+  Object.entries(loadConversationIdMap())
+);
 
 const getConversationId = (conversationKey: string): string => {
+  // 先从内存缓存中查找
   const existing = conversationIdMap.get(conversationKey);
   if (existing) return existing;
 
-  const newId = uuidv4();
-  conversationIdMap.set(conversationKey, newId);
-  return newId;
+  // 如果内存中没有，从 localStorage 获取或创建新的
+  const id = getOrSetConversationId(conversationKey);
+  conversationIdMap.set(conversationKey, id);
+
+  return id;
 };
 
 export const providerFactory = (conversationKey: string) => {

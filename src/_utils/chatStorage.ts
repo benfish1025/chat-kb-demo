@@ -1,10 +1,13 @@
+import { v4 as uuidv4 } from "uuid";
 import type { ChatMessage } from "../types/chat";
 import type { ConversationItemType } from "@ant-design/x";
 
 const STORAGE_KEY_MESSAGES = "chatkb:messages:v1";
 const STORAGE_KEY_CONVERSATIONS = "chatkb:conversations:v1";
+const STORAGE_KEY_CONVERSATION_ID_MAP = "chatkb:conversationIdMap:v1";
 
 type MessagesRecord = Record<string, ChatMessage[]>;
+type ConversationIdMap = Record<string, string>;
 
 const getStorage = (): Storage | null => {
   if (typeof window === "undefined") {
@@ -111,5 +114,55 @@ export const saveConversationsToStorage = (conversations: ConversationItemType[]
   } catch {
     // ignore
   }
+};
+
+/**
+ * 加载 conversationKey 到 UUID 的映射关系
+ */
+export const loadConversationIdMap = (): ConversationIdMap => {
+  const storage = getStorage();
+  if (!storage) return {};
+
+  try {
+    const raw = storage.getItem(STORAGE_KEY_CONVERSATION_ID_MAP);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as ConversationIdMap;
+    if (parsed && typeof parsed === "object") {
+      return parsed;
+    }
+    return {};
+  } catch {
+    return {};
+  }
+};
+
+/**
+ * 保存 conversationKey 到 UUID 的映射关系
+ */
+export const saveConversationIdMap = (map: ConversationIdMap): void => {
+  const storage = getStorage();
+  if (!storage) return;
+
+  try {
+    storage.setItem(STORAGE_KEY_CONVERSATION_ID_MAP, JSON.stringify(map));
+  } catch {
+    // ignore
+  }
+};
+
+/**
+ * 获取或设置 conversationKey 对应的 UUID
+ */
+export const getOrSetConversationId = (conversationKey: string): string => {
+  const map = loadConversationIdMap();
+  if (map[conversationKey]) {
+    return map[conversationKey];
+  }
+
+  // 生成新的 UUID（使用标准的 UUID v4 格式）
+  const newId = uuidv4();
+  map[conversationKey] = newId;
+  saveConversationIdMap(map);
+  return newId;
 };
 

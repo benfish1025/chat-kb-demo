@@ -162,7 +162,6 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
           onClick={handleCopy}
         >
           <img src={copyIcon} alt="copy" style={copyIconStyle} />
-          <span style={copyTextStyle}>复制</span>
         </button>
       </div>
     </div>

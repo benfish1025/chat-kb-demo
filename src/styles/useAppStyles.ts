@@ -95,6 +95,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
 
       /* 2. 新对话按钮 */
       .app-sidebar-new-chat {
+        user-select: none;
         display: flex;
         width: 100%;
         height: 36px;
@@ -285,10 +286,10 @@ export const useAppStyles = createStyles(({ token, css }) => {
         background-repeat: no-repeat;
         background-position: bottom;
       }
-      & .styled-decorative-curve {
+      & .app-styled-decorative-curve {
         position: absolute;
-        right: -32px;
-        bottom: -12px;
+        right: -40px;
+        bottom: -20px;
         width: 180px;
         height: auto;
         pointer-events: none;
@@ -424,6 +425,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
       align-items: center;
       justify-content: center;
       gap: 0;
+      transform: translateX(-48px);
     `,
     welcomeText: css`
       position: relative;
@@ -445,7 +447,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
         "Noto Sans",
         "Liberation Sans",
         sans-serif;
-      font-size: 32px;
+      font-size: 30px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
@@ -463,7 +465,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
         "Noto Sans",
         "Liberation Sans",
         sans-serif;
-      font-size: 32px;
+      font-size: 30px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
