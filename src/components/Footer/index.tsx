@@ -2,9 +2,9 @@ import React from "react";
 import type { CSSProperties } from "react";
 import { message } from "antd";
 
-import type { SourceItem } from "../../config/sources";
-import { useSources } from "../../contexts/SourcesContext";
-import copyIcon from "../../assets/copy.svg";
+import type { SourceItem } from "@/types/chat";
+import { useSources } from "@/contexts/SourcesContext";
+import copyIcon from "@/assets/copy.svg";
 
 interface FooterProps {
   id?: string;

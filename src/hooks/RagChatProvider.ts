@@ -5,7 +5,7 @@ import {
   type XRequestOptions,
   type SSEOutput,
 } from "@ant-design/x-sdk";
-import type { SourceItem } from "../config/sources";
+import type { SourceItem } from "@/types/chat";
 
 /**
  * 后端 /api/messages SSE 接口的请求入参

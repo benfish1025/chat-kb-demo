@@ -1,8 +1,8 @@
 import React from "react";
 import type { ComponentProps } from "@ant-design/x-markdown";
-import type { SourceItem } from "../../config/sources";
-import { useSources } from "../../contexts/SourcesContext";
-import { useAppStyles } from "../../styles/useAppStyles";
+import type { SourceItem } from "@/types/chat";
+import { useSources } from "@/contexts/SourcesContext";
+import { useAppStyles } from "@/styles/useAppStyles";
 
 interface SourcesComponentProps extends ComponentProps {
   sources?: SourceItem[];

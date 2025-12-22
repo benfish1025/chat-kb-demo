@@ -147,6 +147,12 @@ const enUS = {
 export const isZhCN =
   typeof window !== "undefined" && !window?.parent?.location?.pathname?.includes("-cn");
 
-export default isZhCN
-  ? ({ ...zhCN_antd, ...zhCN, ...zhCN_X } as typeof zhCN_antd & typeof zhCN & typeof zhCN_X)
-  : ({ ...enUS_antd, ...enUS, ...enUS_X } as typeof enUS_antd & typeof enUS & typeof enUS_X);
+// 统一的 Locale 类型：包含中英文两套配置的全部字段，方便在业务中直接访问自定义文案
+type Locale = (typeof zhCN_antd & typeof zhCN & typeof zhCN_X) &
+  (typeof enUS_antd & typeof enUS & typeof enUS_X);
+
+const locale = (isZhCN
+  ? { ...zhCN_antd, ...zhCN, ...zhCN_X }
+  : { ...enUS_antd, ...enUS, ...enUS_X }) as Locale;
+
+export default locale;

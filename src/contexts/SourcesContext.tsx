@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
-import type { SourceItem } from "../config/sources";
+import type { SourceItem } from "@/types/chat";
 
 interface SourcesContextType {
   open: boolean;

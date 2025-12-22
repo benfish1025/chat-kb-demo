@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import type { ChatMessage } from "../types/chat";
+import type { ChatMessage } from "@/types/chat";
 import type { ConversationItemType } from "@ant-design/x";
 
 const STORAGE_KEY_MESSAGES = "chatkb:messages:v1";

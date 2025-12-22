@@ -1,8 +1,8 @@
 import XMarkdown from "@ant-design/x-markdown";
 import type { BubbleListProps } from "@ant-design/x";
-import { Footer } from "../components/Footer";
-import { SourcesComponent } from "../components/SourcesComponent";
-import type { SourceItem } from "../config/sources";
+import { Footer } from "@/components/Footer";
+import { SourcesComponent } from "@/components/SourcesComponent";
+import type { SourceItem } from "@/types/chat";
 
 // 从消息内容中提取所有出现过的 <sup>数字</sup> 引用 key
 const extractUsedSourceKeys = (content: string): number[] => {

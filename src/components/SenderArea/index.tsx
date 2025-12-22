@@ -1,8 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Sender } from "@ant-design/x";
 import { Flex, type GetRef } from "antd";
-import locale from "../../_utils/local";
-import { useAppStyles } from "../../styles/useAppStyles";
+import { useAppStyles } from "@/styles/useAppStyles";
 
 interface SenderAreaProps {
   curConversation: string;
@@ -40,7 +39,7 @@ export const SenderArea: React.FC<SenderAreaProps> = ({
       loading={isRequesting}
       onSubmit={handleSubmit}
       onCancel={onCancel}
-      placeholder={locale.placeholder}
+      placeholder={"有问题，尽管问"}
       rootClassName={styles.senderRoot}
       styles={{
         root: {

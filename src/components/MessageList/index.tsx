@@ -1,7 +1,7 @@
 import React from "react";
 import { Bubble } from "@ant-design/x";
 import type { BubbleListProps } from "@ant-design/x";
-import type { ChatMessage } from "../../types/chat";
+import type { ChatMessage } from "@/types/chat";
 
 interface MessageListProps {
   messages: ChatMessage[];

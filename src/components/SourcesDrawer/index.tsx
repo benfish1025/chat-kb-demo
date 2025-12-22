@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { Drawer } from "antd";
 import XMarkdown from "@ant-design/x-markdown";
-import { useSources } from "../../contexts/SourcesContext";
-import { useAppStyles } from "../../styles/useAppStyles";
-import { referenceFileHost } from "../../config/host";
+import { useSources } from "@/contexts/SourcesContext";
+import { useAppStyles } from "@/styles/useAppStyles";
+import { referenceFileHost } from "@/config/host";
 
 export const SourcesDrawer: React.FC = () => {
   const { open, activeSourceIndex, closeDrawer, sources } = useSources();

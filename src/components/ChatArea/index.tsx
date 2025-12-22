@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import type { BubbleListProps } from "@ant-design/x";
-import { MessageList } from "../MessageList";
-import { SenderArea } from "../SenderArea";
-import type { ChatMessage } from "../../types/chat";
-import brandRobot from "../../assets/brand-robot.png";
-import sidebarController from "../../assets/sidebar-controler.svg";
-import decorativeCurve from "../../assets/decorative-curve.svg";
+import { MessageList } from "@/components/MessageList";
+import { SenderArea } from "@/components/SenderArea";
+import type { ChatMessage } from "@/types/chat";
+import brandRobot from "@/assets/brand-robot.png";
+import sidebarController from "@/assets/sidebar-controler.svg";
+import decorativeCurve from "@/assets/decorative-curve.svg";
 
 interface ChatAreaProps {
   messages: ChatMessage[];

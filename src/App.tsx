@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import "./index.css";
+import "@/index.css";
 import { XProvider } from "@ant-design/x";
 import { useXChat, useXConversations } from "@ant-design/x-sdk";
 import { message } from "antd";
@@ -7,23 +7,22 @@ import { message } from "antd";
 import "@ant-design/x-markdown/themes/light.css";
 import "@ant-design/x-markdown/themes/dark.css";
 
-import { ChatContext } from "./contexts/ChatContext";
-import { SourcesProvider } from "./contexts/SourcesContext";
-import { providerFactory } from "./hooks/useProvider";
-import type { RagRequestMessage } from "./hooks/RagChatProvider";
-import { useAppStyles } from "./styles/useAppStyles";
-import { useMarkdownTheme } from "./_utils/x-markdown";
-import { getRole } from "./utils/bubbleRole";
-import { Sidebar } from "./components/Sidebar";
-import { ChatArea } from "./components/ChatArea";
-import { SourcesDrawer } from "./components/SourcesDrawer";
-import locale from "./_utils/local";
+import { ChatContext } from "@/contexts/ChatContext";
+import { SourcesProvider } from "@/contexts/SourcesContext";
+import { providerFactory } from "@/hooks/useProvider";
+import type { RagRequestMessage } from "@/hooks/RagChatProvider";
+import { useAppStyles } from "@/styles/useAppStyles";
+import { useMarkdownTheme } from "@/_utils/x-markdown";
+import { getRole } from "@/components/MessageList/bubbleRole.tsx";
+import { Sidebar } from "@/components/Sidebar";
+import { ChatArea } from "@/components/ChatArea";
+import { SourcesDrawer } from "@/components/SourcesDrawer";
 import {
   loadConversationsFromStorage,
   loadMessages,
   saveConversationsToStorage,
   saveMessages,
-} from "./_utils/chatStorage";
+} from "@/_utils/chatStorage";
 
 const App = () => {
   const [className] = useMarkdownTheme();
@@ -61,14 +60,14 @@ const App = () => {
     defaultMessages,
     requestPlaceholder: () => {
       return {
-        content: locale.noData,
+        content: "暂无数据",
         role: "assistant",
       };
     },
     requestFallback: (_, { messageInfo }) => {
       return {
         ...messageInfo?.message,
-        content: messageInfo?.message.content || locale.requestFailedPleaseTryAgain,
+        content: messageInfo?.message.content || "请求失败，请重试！",
       };
     },
   });
@@ -106,9 +105,9 @@ const App = () => {
       .reverse()
       .find(
         (item) =>
-          (item as any)?.message?.role === "assistant" &&
-          (item as any)?.message?.extraInfo?.title
-      ) as any;
+          item?.message?.role === "assistant" &&
+          item?.message?.extraInfo?.title
+      );
 
     const newTitle = lastWithTitle?.message?.extraInfo?.title as string | undefined;
     if (!newTitle || !newTitle.trim()) return;
@@ -135,7 +134,7 @@ const App = () => {
     const exists = conversations.some((item) => item.key === curConversation);
 
     if (!exists) {
-      const title = val.slice(0, 15) || locale.newConversation;
+      const title = val.slice(0, 15) || "新对话";
       setConversations([{ key: curConversation, label: title }, ...conversations]);
     }
 
@@ -148,13 +147,13 @@ const App = () => {
     // 构造同一会话下最近 10 条历史记录（不包含本次用户输入）
     const historyMessages: RagRequestMessage[] = baseMessages
       .map((item) => {
-        const role = (item as any)?.message?.role;
+        const role = item?.message?.role;
         if (role !== "user" && role !== "assistant") {
           return null;
         }
-        const rawContent = (item as any)?.message?.content;
+        const rawContent = item?.message?.content;
         const content =
-          typeof rawContent === "string" ? rawContent : (rawContent as any)?.text || "";
+          typeof rawContent === "string" ? rawContent : rawContent?.text || "";
         if (!content) {
           return null;
         }
@@ -178,7 +177,7 @@ const App = () => {
   };
 
   return (
-    <XProvider locale={locale}>
+    <XProvider>
       {contextHolder}
       <SourcesProvider>
         <ChatContext.Provider value={{ onReload }}>

@@ -3,12 +3,12 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { Conversations } from "@ant-design/x";
 import dayjs from "dayjs";
 import type { ConversationItemType } from "@ant-design/x";
-import locale from "../../_utils/local";
-import chatkbLogo from "../../assets/chatkb-logo.svg";
-import sidebarController from "../../assets/sidebar-controler.svg";
-import newChatDefault from "../../assets/new-chat-1.svg";
-import newChatHover from "../../assets/new-chat.svg";
-import { removeConversationMessages } from "../../_utils/chatStorage";
+import locale from "@/_utils/local";
+import chatkbLogo from "@/assets/chatkb-logo.svg";
+import sidebarController from "@/assets/sidebar-controler.svg";
+import newChatDefault from "@/assets/new-chat-1.svg";
+import newChatHover from "@/assets/new-chat.svg";
+import { removeConversationMessages } from "@/_utils/chatStorage";
 
 interface SidebarProps {
   conversations: ConversationItemType[];
@@ -109,7 +109,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 menu={(conversation) => ({
                   items: [
                     {
-                      label: locale.delete,
+                      label: "删除",
                       key: "delete",
                       icon: <DeleteOutlined />,
                       danger: true,
