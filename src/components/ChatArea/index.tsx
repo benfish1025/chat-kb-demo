@@ -76,7 +76,10 @@ export const ChatArea: React.FC<ChatAreaProps> = ({
           />
         </div>
       )}
+
+      {/* 渐变背景色只在首页显示 */}
       {messages.length === 0 && <div className={styles.senderBackground} />}
+
       <div className={styles.chatList} ref={chatListRef}>
         {messages?.length !== 0 && <MessageList messages={messages} role={role} />}
         {messages.length === 0 && (

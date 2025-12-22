@@ -43,14 +43,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const handleDeleteConversation = (conversation: ConversationItemType) => {
     const newList = conversations.filter((item) => item.key !== conversation.key);
-    const newKey = newList?.[0]?.key;
 
     // 删除本地存储中的对应会话消息
     removeConversationMessages(conversation.key);
 
     setConversations(newList);
     if (conversation.key === curConversation) {
-      onConversationChange(newKey ?? "");
+      // 无论是否还有其它会话，都生成一个全新的会话 key，
+      // 等价于自动进入首页（新对话），避免自动切换到其它已有会话。
+      onConversationChange(dayjs().valueOf().toString());
     }
   };
 
