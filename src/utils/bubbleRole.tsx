@@ -54,6 +54,8 @@ export const getRole = (className: string): BubbleListProps["role"] => ({
           ? rawSources.filter((item) => usedKeys.includes(item.key))
           : rawSources;
 
+      const text = content.trim().length > 0 ? content : "思考中...";
+
       return (
         <XMarkdown
           paragraphTag="p"
@@ -72,7 +74,7 @@ export const getRole = (className: string): BubbleListProps["role"] => ({
             ),
           }}
         >
-          {content}
+          {text}
         </XMarkdown>
       );
     },

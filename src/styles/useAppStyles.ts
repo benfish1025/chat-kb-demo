@@ -545,15 +545,15 @@ export const useAppStyles = createStyles(({ token, css }) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      color: #0082ed;
-      border: 2px solid #0082ed;
+      color: #ffffff;
+      background-color: #0082ed;
       font-size: 14px;
       font-weight: 600;
       flex-shrink: 0;
-      line-height: 26px;
+      line-height: 24px;
     `,
     sourcesDrawerItemContent: css`
       display: flex;

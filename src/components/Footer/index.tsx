@@ -106,31 +106,22 @@ export const Footer: React.FC<FooterProps> = ({ id, content, status, sources }) 
 
   const copyButtonStyle: CSSProperties = {
     display: "flex",
-    padding: "4px 8px",
     borderRadius: 6,
     alignItems: "center",
     gap: 6,
     cursor: "pointer",
     appearance: "none",
+    width: 28,
+    height: 28,
     outline: "none",
     border: "none",
-    background: "rgba(188, 197, 206, 0.1)",
+    background: "transparent",
     boxShadow: "none",
   };
 
-  const copyTextStyle: CSSProperties = {
-    color: "rgba(18, 31, 43, 0.6)",
-    fontFamily:
-      '"PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif',
-    fontSize: 14,
-    fontStyle: "normal",
-    fontWeight: 400,
-    lineHeight: "20px",
-  };
-
   const baseIconStyle: CSSProperties = {
-    width: 18,
-    height: 18,
+    width: 14,
+    height: 14,
     flexShrink: 0,
   };
 
