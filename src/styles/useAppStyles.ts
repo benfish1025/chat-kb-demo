@@ -350,6 +350,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
       overflow-y: auto;
       padding-bottom: 24px;
       box-sizing: border-box;
+      scrollbar-gutter: stable;
     `,
     senderContainer: css`
       position: relative;
@@ -360,6 +361,8 @@ export const useAppStyles = createStyles(({ token, css }) => {
       align-items: center;
       padding: 10px 0 0;
       box-sizing: border-box;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
       && .sender-footer {
         display: flex;
         padding: 8px 0;
