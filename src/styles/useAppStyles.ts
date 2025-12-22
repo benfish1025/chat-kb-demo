@@ -484,7 +484,7 @@ export const useAppStyles = createStyles(({ token, css }) => {
     `,
     sourceSup: css`
       display: inline-block;
-      background: rgba(0, 130, 237, 0.05);
+      background: rgba(0, 130, 237, 0.2);
       cursor: pointer;
       transition: background 0.2s ease;
       padding: 2px 6px;

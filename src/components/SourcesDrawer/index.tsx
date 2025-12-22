@@ -47,7 +47,7 @@ export const SourcesDrawer: React.FC = () => {
 
   return (
     <Drawer
-      title="来源文档"
+      title="参考来源"
       placement="right"
       onClose={closeDrawer}
       open={open}
