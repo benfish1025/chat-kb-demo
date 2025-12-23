@@ -43,7 +43,7 @@ const zhCN = {
   modelExecutionCompleted: "大模型执行完成",
   executionFailed: "执行失败",
   aborted: "已经终止",
-  noData: "暂无数据",
+  noData: "咦，小K竟然没找到答案，建议你打开新对话重新提问☺️",
   newConversation: "新对话",
   curConversation: "当前对话",
   itIsNowANewConversation: "当前已经是新会话",
