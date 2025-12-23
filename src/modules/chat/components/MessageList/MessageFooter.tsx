@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { message } from "antd";
 import type { SourceItem } from "@/modules/sources/types/source";
 import { useSources } from "@/modules/sources/contexts/SourcesContext";
-import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/extractSourceKeys.ts";
+import { filterSourcesByContent } from "@/modules/chat/components/MessageList/sourceHelpers.ts";
 import copyIcon from "@/assets/copy.svg";
 
 interface MessageFooterProps {
@@ -123,13 +123,11 @@ export const MessageFooter: React.FC<MessageFooterProps> = ({ content, info }) =
 
   // 逻辑：处理组件的数据，为渲染做准备
   const { status, key, extraInfo } = info || {};
-  const rawSources = (extraInfo?.sources as SourceItem[]) || [];
   const textContent = typeof content === "string" ? content : String(content ?? "");
-  const usedKeys = extractUsedSourceKeys(textContent);
-  const filteredSources =
-    usedKeys.length > 0
-      ? rawSources.filter((item) => usedKeys.includes(item.key))
-      : rawSources;
+  const filteredSources = filterSourcesByContent(
+    extraInfo?.sources as SourceItem[] | undefined,
+    textContent
+  );
 
   const sourceCount = filteredSources.length;
   const hasSources = sourceCount > 0;

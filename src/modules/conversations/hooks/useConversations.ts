@@ -4,7 +4,7 @@ import type { ConversationItemType } from "@ant-design/x";
 import {
   loadConversationsFromStorage,
   saveConversationsToStorage,
-} from "@/modules/conversations/api/storage";
+} from "@/modules/conversations/api/conversationsStorage.ts";
 
 /**
  * 对会话列表按 createdAt 降序排序（最新的在前）

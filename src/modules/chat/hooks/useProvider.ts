@@ -1,7 +1,7 @@
 import { XRequest, type SSEOutput } from "@ant-design/x-sdk";
 import { RagChatProvider, type RagRequestParams } from "@/modules/chat/hooks/RagChatProvider";
 import { getOwnerId } from "@/common/utils/ownerId";
-import { apiHost } from "@/modules/chat/api/chatApiEndPoint.ts";
+import { apiHost } from "@/modules/chat/api/chatApiEndPoints.ts";
 
 const providerCaches = new Map<string, RagChatProvider>();
 

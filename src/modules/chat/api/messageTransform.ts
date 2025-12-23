@@ -7,7 +7,7 @@ import type { RagRequestMessage } from "@/modules/chat/hooks/RagChatProvider";
  */
 export const transformMessagesToHistory = (
   messages: ChatMessage[],
-  limit: number = 10
+  limit: number = 6
 ): RagRequestMessage[] => {
   return messages
     .map((item) => {

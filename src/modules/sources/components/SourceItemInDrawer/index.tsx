@@ -2,7 +2,7 @@ import React from "react";
 import XMarkdown from "@ant-design/x-markdown";
 import type { SourceItem as SourceItemType } from "@/modules/sources/types/source";
 import { useAppStyles } from "@/common/styles/useAppStyles";
-import { referenceFileHost } from "@/modules/chat/api/chatApiEndPoint.ts";
+import { referenceFileHost } from "@/modules/chat/api/chatApiEndPoints.ts";
 import { sanitizeMarkdownTables } from "@/modules/sources/components/SourceItemInDrawer/sanitizeMarkdownTables";
 
 interface SourceItemProps {

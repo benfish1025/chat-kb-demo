@@ -2,7 +2,7 @@ import React from "react";
 import XMarkdown from "@ant-design/x-markdown";
 import { SourcesComponent } from "@/modules/sources/components/SourcesComponentInline";
 import type { SourceItem } from "@/modules/sources/types/source";
-import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/extractSourceKeys.ts";
+import { filterSourcesByContent } from "@/modules/chat/components/MessageList/sourceHelpers.ts";
 
 interface MessageContentProps {
   content: string;
@@ -18,12 +18,10 @@ interface MessageContentProps {
 
 export const MessageContent: React.FC<MessageContentProps> = ({ content, className, info }) => {
   const { status, extraInfo, key } = info || {};
-  const rawSources = (extraInfo?.sources as SourceItem[]) || [];
-  const usedKeys = extractUsedSourceKeys(content);
-  const filteredSources =
-    usedKeys.length > 0
-      ? rawSources.filter((item) => usedKeys.includes(item.key))
-      : rawSources;
+  const filteredSources = filterSourcesByContent(
+    extraInfo?.sources as SourceItem[] | undefined,
+    content
+  );
 
   const text = content.trim().length > 0 ? content : "思考中...";
 

@@ -5,7 +5,6 @@ import { useAppStyles } from "@/common/styles/useAppStyles";
 import { useChatContext } from "@/modules/chat/contexts/ChatContext";
 import { SenderFooter } from "@/modules/chat/components/SenderArea/SenderFooter";
 
-// 样式定义（放在组件外部）
 const senderStyles = {
   root: {
     display: "flex",
