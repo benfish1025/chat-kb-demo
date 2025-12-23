@@ -1,4 +1,4 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -158,4 +158,8 @@ table {
 
 .message-footer-button:active {
   transform: scale(0.95);
+}
+
+.x-markdown table:not(pre) {
+  max-width: 864px !important;
 }
