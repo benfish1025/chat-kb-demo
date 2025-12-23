@@ -239,17 +239,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
         color: rgba(0, 0, 0, 0.9);
         text-overflow: ellipsis;
         white-space: nowrap;
-        font-family:
-          "PingFang SC",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Helvetica Neue",
-          Arial,
-          "Noto Sans",
-          "Liberation Sans",
-          sans-serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -369,7 +358,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
         align-items: center;
         color: rgba(18, 31, 43, 0.50);
         text-align: center;
-        font-family: "PingFang SC";
         font-size: 10px;
         font-style: normal;
         font-weight: 400;
@@ -439,17 +427,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
     `,
     welcomeTextLine1: css`
       color: #1a2025;
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
       font-size: 30px;
       font-style: normal;
       font-weight: 600;
@@ -457,17 +434,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
     `,
     welcomeTextLine2: css`
       color: #cdd3d7;
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
       font-size: 30px;
       font-style: normal;
       font-weight: 600;
@@ -504,17 +470,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
       }
 
       .ant-drawer-title {
-        font-family:
-          "PingFang SC",
-          -apple-system,
-          BlinkMacSystemFont,
-          "Segoe UI",
-          Roboto,
-          "Helvetica Neue",
-          Arial,
-          "Noto Sans",
-          "Liberation Sans",
-          sans-serif;
         font-size: 16px;
         font-weight: 600;
         color: #1a2025;
@@ -571,17 +526,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
       gap: 8px;
     `,
     sourcesDrawerItemTitle: css`
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
       font-size: 14px;
       font-weight: 600;
       color: #1a2025;
@@ -599,17 +543,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
       padding: 0 12px;
     `,
     sourcesDrawerItemDescription: css`
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
       font-size: 14px;
       font-weight: 400;
       color: rgba(26, 32, 37, 0.8);
@@ -624,17 +557,6 @@ export const useAppStyles = createStyles(({ token, css }) => {
       display: flex;
       align-items: center;
       gap: 8px;
-      font-family:
-        "PingFang SC",
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        "Helvetica Neue",
-        Arial,
-        "Noto Sans",
-        "Liberation Sans",
-        sans-serif;
       font-size: 12px;
       font-weight: 400;
       color: rgba(26, 32, 37, 0.6);
