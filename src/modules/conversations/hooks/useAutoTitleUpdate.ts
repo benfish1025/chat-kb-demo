@@ -35,6 +35,7 @@ export const useAutoTitleUpdate = (
     if (current.label === newTitle) return;
 
     const next = [...conversations];
+    // 更新标题时保留 createdAt 字段
     next[index] = { ...current, label: newTitle };
     setConversations(next);
   }, [messages, conversations, curConversation, setConversations]);

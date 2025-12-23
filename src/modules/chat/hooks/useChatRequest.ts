@@ -33,7 +33,11 @@ export const useChatRequest = ({
 
     if (!exists) {
       const title = val.slice(0, 15) || "新对话";
-      setConversations([{ key: curConversation, label: title }, ...conversations]);
+      const createdAt = Date.now();
+      setConversations([
+        { key: curConversation, label: title, createdAt },
+        ...conversations,
+      ]);
     }
 
     // 仅当当前会话仍然存在于会话列表中时，才使用历史消息；

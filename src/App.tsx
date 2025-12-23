@@ -18,14 +18,15 @@ import { useAppStyles } from "@/common/styles/useAppStyles";
 import { Sidebar } from "@/modules/conversations/components/Sidebar";
 import { ChatArea } from "@/modules/chat/components/ChatArea";
 import { SourcesDrawer } from "@/modules/sources/components/SourcesDrawer";
+import { generateConversationId } from "@/modules/chat/api/conversationId";
 
 const AppContent = () => {
   // 首次进入时始终生成一个"全新"的会话 key，
   // 不直接进入历史对话，从而默认展示首页。
   // 只有在用户发送第一条消息或点击侧边栏会话时，才会真正进入对应会话。
   const [curConversation, setCurConversation] = useState<string>(() => {
-    // 使用时间戳确保唯一性
-    return Date.now().toString();
+    // 使用 UUID 作为会话标识
+    return generateConversationId();
   });
 
   const { onRequest, messages, isRequesting, abort, onReload } = useChat(curConversation);

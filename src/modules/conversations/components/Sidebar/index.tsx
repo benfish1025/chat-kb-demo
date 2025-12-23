@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Conversations } from "@ant-design/x";
-import dayjs from "dayjs";
 import type { ConversationItemType } from "@ant-design/x";
 import chatkbLogo from "@/assets/chatkb-logo.svg";
 import sidebarController from "@/assets/sidebar-controler.svg";
@@ -11,6 +10,7 @@ import { removeConversationMessages } from "@/modules/chat/api/messages";
 import { useAppStyles } from "@/common/styles/useAppStyles";
 import { useSidebar } from "@/modules/conversations/contexts/SidebarContext";
 import { useConversationsContext } from "@/modules/conversations/contexts/ConversationsContext";
+import { generateConversationId } from "@/modules/chat/api/conversationId";
 
 interface SidebarProps {
   curConversation: string;
@@ -47,8 +47,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   // 逻辑：处理组件的数据，为渲染做准备
   const handleCreateConversation = () => {
-    const now = dayjs().valueOf().toString();
-    onConversationChange(now);
+    const newConversationKey = generateConversationId();
+    onConversationChange(newConversationKey);
   };
 
   const handleDeleteConversation = (conversation: ConversationItemType) => {
@@ -56,7 +56,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     removeConversationMessages(conversation.key);
     setConversations(newList);
     if (conversation.key === curConversation) {
-      onConversationChange(dayjs().valueOf().toString());
+      // 删除当前会话后，创建新的会话
+      const newConversationKey = generateConversationId();
+      onConversationChange(newConversationKey);
     }
   };
 
