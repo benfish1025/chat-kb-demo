@@ -46,8 +46,8 @@ export const useChatRequest = ({
       ? messages
       : [];
 
-    // 构造同一会话下最近 10 条历史记录（不包含本次用户输入）
-    const historyMessages = transformMessagesToHistory(baseMessages, 10);
+    // 构造同一会话下最近 6 条历史记录（不包含本次用户输入）
+    const historyMessages = transformMessagesToHistory(baseMessages, 6);
 
     // content 为本次用户输入；messages 为历史记录
     onRequest({
