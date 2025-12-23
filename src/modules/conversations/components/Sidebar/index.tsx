@@ -6,7 +6,7 @@ import chatkbLogo from "@/assets/chatkb-logo.svg";
 import sidebarController from "@/assets/sidebar-controler.svg";
 import newChatDefault from "@/assets/new-chat-1.svg";
 import newChatHover from "@/assets/new-chat.svg";
-import { removeConversationMessages } from "@/modules/chat/api/messages";
+import { removeConversationMessages } from "@/modules/chat/api/messagesStorage.ts";
 import { useAppStyles } from "@/common/styles/useAppStyles";
 import { useSidebar } from "@/modules/conversations/contexts/SidebarContext";
 import { useConversationsContext } from "@/modules/conversations/contexts/ConversationsContext";
@@ -45,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const { conversations, setConversations } = useConversationsContext();
   const [newChatHovering, setNewChatHovering] = useState(false);
 
-  // 逻辑：处理组件的数据，为渲染做准备
+  // 逻辑
   const handleCreateConversation = () => {
     const newConversationKey = generateConversationId();
     onConversationChange(newConversationKey);

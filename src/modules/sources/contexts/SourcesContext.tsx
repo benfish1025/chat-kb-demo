@@ -5,7 +5,7 @@ interface SourcesContextType {
   open: boolean;
   activeSourceIndex: number | null;
   /**
-   * 当前消息对应的来源列表，由 Footer / SourcesComponent 在交互时写入
+   * 当前消息对应的来源列表，由 Footer / SourcesComponentInline 在交互时写入
    */
   sources: SourceItem[];
   setSources: (sources: SourceItem[]) => void;

@@ -3,7 +3,7 @@ import type { CSSProperties } from "react";
 import { message } from "antd";
 import type { SourceItem } from "@/modules/sources/types/source";
 import { useSources } from "@/modules/sources/contexts/SourcesContext";
-import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/bubbleRole";
+import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/extractSourceKeys.ts";
 import copyIcon from "@/assets/copy.svg";
 
 interface MessageFooterProps {
@@ -151,7 +151,6 @@ export const MessageFooter: React.FC<MessageFooterProps> = ({ content, info }) =
     handleCopyToClipboard(textContent);
   };
 
-  // 标记：组件正常情况下的 JSX 渲染结果
   return (
     <div style={containerStyle}>
       <div style={footerRowStyle}>

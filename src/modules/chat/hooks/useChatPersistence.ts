@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import type { ChatMessage } from "@/modules/chat/types/chat";
 import type { ConversationItemType } from "@ant-design/x";
-import { saveMessages } from "@/modules/chat/api/messages";
+import { saveMessages } from "@/modules/chat/api/messagesStorage.ts";
 
 /**
  * 处理聊天消息的持久化逻辑

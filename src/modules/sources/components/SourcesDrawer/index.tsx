@@ -3,7 +3,7 @@ import { Drawer } from "antd";
 import { useSources } from "@/modules/sources/contexts/SourcesContext";
 import { useAppStyles } from "@/common/styles/useAppStyles";
 import { useSourceHighlight } from "@/modules/sources/hooks/useSourceHighlight";
-import { SourceItem } from "@/modules/sources/components/SourceItem";
+import { SourceItem } from "@/modules/sources/components/SourceItemInDrawer";
 
 export const SourcesDrawer: React.FC = () => {
   const { open, activeSourceIndex, closeDrawer, sources } = useSources();

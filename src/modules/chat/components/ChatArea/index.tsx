@@ -10,13 +10,13 @@ import { useConversationsContext } from "@/modules/conversations/contexts/Conver
 import { useAutoScroll } from "@/common/hooks/useAutoScroll";
 
 export const ChatArea: React.FC = () => {
-  // 设置：定义状态和使用钩子
+
   const { styles } = useAppStyles();
   const { collapsed, openSidebar } = useSidebar();
   const { messages, isRequesting, curConversation } = useChatContext();
   const { conversations } = useConversationsContext();
 
-  // 逻辑：处理组件的数据，为渲染做准备
+  // 组件数据逻辑
   const isExistingConversation = conversations.some(
     (item) => item.key === curConversation
   );
@@ -25,7 +25,6 @@ export const ChatArea: React.FC = () => {
   const hasMessages = displayMessages.length > 0;
   const isEmpty = displayMessages.length === 0;
 
-  // 标记：组件正常情况下的 JSX 渲染结果
   return (
     <div className={styles.chat}>
       {collapsed ? (

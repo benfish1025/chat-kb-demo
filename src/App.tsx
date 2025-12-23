@@ -21,11 +21,8 @@ import { SourcesDrawer } from "@/modules/sources/components/SourcesDrawer";
 import { generateConversationId } from "@/modules/chat/api/conversationId";
 
 const AppContent = () => {
-  // 首次进入时始终生成一个"全新"的会话 key，
-  // 不直接进入历史对话，从而默认展示首页。
-  // 只有在用户发送第一条消息或点击侧边栏会话时，才会真正进入对应会话。
+  // 首次进入时始终生成一个全新的会话 key，
   const [curConversation, setCurConversation] = useState<string>(() => {
-    // 使用 UUID 作为会话标识
     return generateConversationId();
   });
 
@@ -34,7 +31,7 @@ const AppContent = () => {
   const { styles } = useAppStyles();
   const [, contextHolder] = message.useMessage();
 
-  // 使用自定义 Hooks 处理业务逻辑
+  // 业务逻辑
   useChatPersistence(curConversation, messages, conversations);
   useAutoTitleUpdate(curConversation, messages, conversations, setConversations);
   const { handleRequest } = useChatRequest({

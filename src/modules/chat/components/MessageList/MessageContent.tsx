@@ -1,8 +1,8 @@
 import React from "react";
 import XMarkdown from "@ant-design/x-markdown";
-import { SourcesComponent } from "@/modules/sources/components/SourcesComponent";
+import { SourcesComponent } from "@/modules/sources/components/SourcesComponentInline";
 import type { SourceItem } from "@/modules/sources/types/source";
-import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/bubbleRole";
+import { extractUsedSourceKeys } from "@/modules/chat/components/MessageList/extractSourceKeys.ts";
 
 interface MessageContentProps {
   content: string;

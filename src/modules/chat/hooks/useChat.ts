@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useXChat } from "@ant-design/x-sdk";
 import { providerFactory } from "@/modules/chat/hooks/useProvider";
-import { loadMessages } from "@/modules/chat/api/messages";
+import { loadMessages } from "@/modules/chat/api/messagesStorage.ts";
 
 export const useChat = (curConversation: string) => {
   const defaultMessages = useMemo(() => {

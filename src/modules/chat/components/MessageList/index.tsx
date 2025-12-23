@@ -2,7 +2,8 @@ import React from "react";
 import { Bubble } from "@ant-design/x";
 import type { ChatMessage } from "@/modules/chat/types/chat";
 import { useMarkdownTheme } from "@/common/hooks/useMarkdownTheme";
-import { getRole } from "@/modules/chat/components/MessageList/bubbleRole";
+import { MessageFooter } from "@/modules/chat/components/MessageList/MessageFooter.tsx";
+import { MessageContent } from "@/modules/chat/components/MessageList/MessageContent.tsx";
 
 interface MessageListProps {
   messages: ChatMessage[];
@@ -10,7 +11,6 @@ interface MessageListProps {
 
 export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   const [className] = useMarkdownTheme();
-  const role = getRole(className);
   const orderedMessages = [...(messages ?? [])].filter((i) => i.id).reverse();
 
   return (
@@ -41,7 +41,16 @@ export const MessageList: React.FC<MessageListProps> = ({ messages }) => {
           padding: 0,
         },
       }}
-      role={role}
+      role={{
+        assistant: {
+          placement: "start",
+          footer: (content, info) => <MessageFooter content={content} info={info} />,
+          contentRender: (content: string, info) => (
+            <MessageContent content={content} className={className} info={info} />
+          ),
+        },
+        user: { placement: "end" },
+      }}
     />
   );
 };
